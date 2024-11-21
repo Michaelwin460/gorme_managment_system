@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import './AdminDisplayUser.css'
+import '../styles/AdminDisplayUser.css'
 
 const AdminDisplayUser = () => {
   const { id } = useParams();
@@ -46,7 +46,7 @@ const AdminDisplayUser = () => {
     if(leavingDate)
       {
         console.log(leavingDate);
-        leavingDate.toString().split("T")[0]
+        // setLeavingDate(new Date().toISOString().split("T")[0])
         axios
         .put(`http://localhost:3000/auth/update_user_leaving_date/${id}`, { leaving_date: leavingDate })
         .then((res) => {
@@ -63,7 +63,7 @@ const AdminDisplayUser = () => {
   
     // If the user confirms, proceed with deletion
     if (confirmDelete) {
-      if (status === "done") {
+      if (status !== 'active') {
         axios
           .delete("http://localhost:3000/auth/delete_user/" + id)
           .then((res) => {
@@ -111,7 +111,7 @@ const AdminDisplayUser = () => {
   const handleUpdateStatusItem = (itemId) => {
     const item = equipment.find((item) => item.item_id === itemId);
     const enableItemUpdate = item && item.status !== "done";
-    const currentDate = new Date().toString().split("T")[0]
+    const currentDate = new Date().toISOString().split("T")[0];
     if(enableItemUpdate)
     {
       // Confirm before deleting an equipment item
@@ -136,12 +136,14 @@ const AdminDisplayUser = () => {
       const requested_status = (equipment.length === 0) ? "done" : "leaving";
       const defaultLeavingDate = new Date();
       defaultLeavingDate.setMonth(defaultLeavingDate.getMonth() + 3);
-      setLeavingDate(defaultLeavingDate.toString().split("T")[0]);
+      const formattedDate = defaultLeavingDate.toISOString().split("T")[0];
+
+      setLeavingDate(leavingDate ? leavingDate : formattedDate);
       setStatus(requested_status);
 
       // Update user status to 'requested_status' in the backend
       axios
-        .put(`http://localhost:3000/auth/update_user_status/${id}`, { update_status: requested_status, leave_date: leavingDate })
+        .put(`http://localhost:3000/auth/update_user_status/${id}`, { update_status: requested_status, leave_date: formattedDate })
         .then((res) => {
           if (!res.data.Status) alert(res.data.Error);
         })
@@ -149,7 +151,7 @@ const AdminDisplayUser = () => {
 
       // Update user's equipment status to 'requested_status' in the backend
       axios
-      .put(`http://localhost:3000/auth/update_all_items_status/${id}`, { update_status: requested_status, leave_date: leavingDate })
+      .put(`http://localhost:3000/auth/update_all_items_status/${id}`, { update_status: requested_status, leave_date: formattedDate })
       .then((res) => {
         if (!res.data.Status) alert(res.data.Error);
       })
@@ -189,7 +191,7 @@ const AdminDisplayUser = () => {
             </tr>
             <tr>
               <td className="text-center mb-3 "><strong>Start Date:</strong></td>
-              <td>{user.start_date ? user.start_date.toString().split("T")[0] : user.start_date}</td>
+              <td>{new Date().toISOString().split("T")[0]}</td>
               {status !== "active" && (
               <>
                 <td className="text-center mb-3 "><strong>Leaving Date:</strong></td>
@@ -231,7 +233,7 @@ const AdminDisplayUser = () => {
                 <td>{item.item_name}</td>
                 <td>{item.item_description}</td>
                 <td>{item.status}</td>
-                <td>{item.start_date ? item.start_date.toString().split("T")[0] : item.start_date}</td>
+                <td>{new Date().toISOString().split("T")[0]}</td>
                 <td>
                   <button
                     className="btn btn-danger btn-sm m-2"

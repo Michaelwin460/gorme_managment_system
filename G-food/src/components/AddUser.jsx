@@ -15,7 +15,7 @@ const AddUser = () => {
     image: "",
     department_id: "",
     // rol: "",
-    start_date: new Date().toString().split("T")[0],
+    start_date: new Date().toLocaleDateString("en-CA"),
     leave_date: "",
     status: "active"
   });
@@ -186,7 +186,7 @@ const AddUser = () => {
               value={user.start_date}
               onChange={(e) => {
                 const time = e.target.value;
-                setUser({...user, start_date : time.toString().split("T")[0]});
+                setUser({...user, start_date : time.toLocaleDateString("en-CA")});
               }}
             />
           </div>

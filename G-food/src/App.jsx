@@ -1,4 +1,4 @@
-import './App.css'
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Login from './components/Login'
@@ -11,9 +11,7 @@ import AddDepartment from './components/AddDepartment'
 import AddCategory from './components/AddCategory.jsx'
 import AddUser from './components/AddUser'
 import EditUser from './components/EditUser'
-import Start from './components/Start'
-import EmployeeLogin from './components/Emploeey/EmployeeLogin'
-import EmployeeDetails from './components/Emploeey/EmployeeDetails'
+import EmployeeDetails from './components/EmployeeDetails'
 import ProtectedRoute from './components/ProtectedRoute'
 import AdminDisplayUser from './components/AdminDisplayUser'
 import AddItemAdminPanel from './components/AddItemAdminPanel'
@@ -28,8 +26,6 @@ function App() {
         <Routes>
 
           <Route path='/' element={<Login />} />
-          {/* <Route path='/employeelogin' element={<EmployeeLogin />} />
-          <Route path='/adminlogin' element={<Login />} /> */}
           <Route path='/employee_details/:id' element={
               <ProtectedRoute>
                 <EmployeeDetails />

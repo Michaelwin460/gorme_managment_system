@@ -231,7 +231,7 @@ const EditUser = () => {
               value={user.start_date}
               onChange={(e) => {
                 const time = e.target.value;
-                setUser({...user, start_date : time.toString().split("T")[0]});
+                setUser({...user, start_date : time.toString().split('T')[0]});
               }}
             />
           </div>
@@ -247,7 +247,7 @@ const EditUser = () => {
                 value={user.leave_date}
                 onChange={(e) => {
                   const time = e.target.value;
-                  setUser({...user, start_date : time.toString().split("T")[0]});  
+                  setUser({...user, start_date : time.toString().split('T')[0]});  
                 }
               }
               />

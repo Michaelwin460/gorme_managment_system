@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useContext } from 'react'
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from './AuthContext';
 
 
 const EmployeeDetails = () => {

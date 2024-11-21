@@ -2,15 +2,17 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
 import { AuthContext } from './AuthContext';
 import axios from 'axios';
-import './Reports.css';
+import '../styles/Reports.css';
+import { jsPDF } from "jspdf";
+import "jspdf-autotable"; 
 
 const Report = () => {
   const { user } = useContext(AuthContext);
   const [equipment, setEquipment] = useState([]);
   const [nameSearch, setNameSearch] = useState('');
   const [idSearch, setIdSearch] = useState('');
-  const [dateRange, setDateRange] = useState('');
-  const [historyDateRange, setHistoryDateRange] = useState('');
+  const [dateRange, setDateRange] = useState(0);
+  const [historyDateRange, setHistoryDateRange] = useState(0);
   const [isEquipmentManager, setIsEquipmentManager] = useState(-1);
   const [showEquipment, setShowEquipment] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
@@ -19,63 +21,130 @@ const Report = () => {
     if (user && user.item_category_managment !== -1) 
         setIsEquipmentManager(user.item_category_managment);
 
-    axios.get(`http://localhost:3000/auth/equipment_by_category/${isEquipmentManager}`)
+    axios.get(`http://localhost:3000/auth/equipment_by_category_and_user/${isEquipmentManager}`)
       .then(res => setEquipment(res.data.Status ? res.data.Result : []))
+      .then(res => console.log(equipment))
       .catch(err => console.log(err));
   }, []);
 
   const filterItemsByDate = (items, range) => {
     const now = new Date();
-    const ranges = {
-      today: new Date(),
-      nextWeek: new Date(now.setDate(now.getDate() + 7)),
-      nextMonth: new Date(now.setMonth(now.getMonth() + 1)),
-    };
+    
+    // Define date ranges using milliseconds for accurate time manipulation
+    const ranges = [
+      new Date(), // today
+      new Date(now.getTime() + 1 * 24 * 60 * 60 * 1000), // tomorrow
+      new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000), // 7 days later
+      new Date(now.setMonth(now.getMonth() + 3)) // 3 month later
+    ];
+  
     const endDate = ranges[range];
-    return items.filter(item => new Date(item.leave_date) <= endDate);
+    
+    // Compare item dates to the range end date
+    return items.filter(item => {
+      const itemDate = new Date(item.leave_date); // Convert to Date object
+      // console.log("leave_date:", itemDate, "end Date:", endDate);
+    
+      // Return items where the item leave_date is before or equal to the endDate
+      return itemDate <= endDate;
+    });
   };
-
+  
   const filteredItems = filterItemsByDate(
     equipment.filter(e => 
+      (e.status.includes('leaving')) &&
       (e.item_name.toLowerCase().includes(nameSearch.toLowerCase()) || nameSearch === '') &&
-      (e.item_id.toString().includes(idSearch) || idSearch === '')
+      (e.item_id.includes(idSearch) || idSearch === '') 
     ),
     dateRange
   );
 
   const filterDoneItemsByDateRange = (items, range) => {
     const now = new Date();
-    const dateRanges = {
-      lastWeek: new Date(now.setDate(now.getDate() - 7)),
-      lastMonth: new Date(now.setMonth(now.getMonth() - 1)),
-      lastYear: new Date(now.setFullYear(now.getFullYear() - 1))
-    };
-    const startDate = dateRanges[range];
+    const ranges = [
+      new Date(), // today
+      new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000), // 7 days earlier
+      new Date(now.setMonth(now.getMonth() - 1)), // 1 month earlier
+      new Date(now.setMonth(now.getMonth() - 3)) // 3 month earlier
+    ];
+    const startDate = ranges[range];
     return items.filter(item => 
-      item.status === "done" && new Date(item.leave_date) >= startDate
+      (item.status === "done") && (new Date(item.leave_date) >= startDate)
     );
   };
 
   const doneItems = filterDoneItemsByDateRange(equipment, historyDateRange);
+  
+  const handleDownloadReportTasks = () => {
+    const doc = new jsPDF();
+    
+    // Report title and metadata
+    doc.setFontSize(18);
+    doc.text(`TO DO LIST ITEMS REPORT:`, 14, 20);
+    doc.setFontSize(12);
+    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 30);
+  
+    // Prepare data for the table
+    const tableColumn = ["Name", "Email", "Phone", "Item name", "Description", "Return Date"];
+    const tableRows = filteredItems.map(item => [
+      item.name,
+      item.email,
+      item.phone,
+      item.item_name,
+      item.item_description,
+      item.leave_date.toString().split("T")[0]
+    ]);
+  
+    // Add the table to the PDF
+    doc.autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 40,
+      theme: 'grid',
+      headStyles: { fillColor: [41, 128, 185], textColor: [255, 255, 255] },
+      bodyStyles: { fillColor: [245, 245, 245] },
+      styles: { cellPadding: 3, fontSize: 10 },
+      margin: { top: 20 },
+    });
+  
+    // Save the PDF
+    doc.save("tasks_report.pdf");
+  };
 
-  const handleDownloadReport = async (type) => {
-    const searchParams = type === 'tasks'
-      ? { name: nameSearch, id: idSearch, dateRange }
-      : { dateRange: historyDateRange };
-
-    try {
-      const response = await axios.post(`http://localhost:3000/auth/download-${type}-report`, searchParams, {
-        responseType: 'blob',
-      });
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `${type}-report.pdf`);
-      document.body.appendChild(link);
-      link.click();
-    } catch (error) {
-      console.error("Error downloading report:", error);
-    }
+  const handleDownloadReportHistory = () => {
+    const doc = new jsPDF();
+    
+    // Report title and metadata
+    doc.setFontSize(18);
+    doc.text(`ITEMS HISTORY REPORT:`, 14, 20);
+    doc.setFontSize(12);
+    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 30);
+  
+    // Prepare data for the table
+    const tableColumn = ["Name", "Email", "Phone", "Item name", "Description", "Return Date"];
+    const tableRows = doneItems.map(item => [
+      item.name,
+      item.email,
+      item.phone,
+      item.item_name,
+      item.item_description,
+      item.leave_date.toString().split("T")[0]
+    ]);
+  
+    // Add the table to the PDF
+    doc.autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 40,
+      theme: 'grid',
+      headStyles: { fillColor: [41, 128, 185], textColor: [255, 255, 255] },
+      bodyStyles: { fillColor: [245, 245, 245] },
+      styles: { cellPadding: 3, fontSize: 10 },
+      margin: { top: 20 },
+    });
+  
+    // Save the PDF
+    doc.save("history_report.pdf");
   };
 
   return (
@@ -112,15 +181,15 @@ const Report = () => {
             />
             <select
               value={dateRange}
-              onChange={(e) => setDateRange(e.target.value)}
+              onChange={(e) => setDateRange(Number(e.target.value))}
               className="small-input"
             >
-              <option value="">Select Date Range</option>
-              <option value="today">Today</option>
-              <option value="nextWeek">Next Week</option>
-              <option value="nextMonth">Next Month</option>
+              <option value="0">Select Date Range</option>
+              <option value="1">Today</option>
+              <option value="2">Next Week</option>
+              <option value="3">Next Month</option>
             </select>
-            <button onClick={() => handleDownloadReport('tasks')} className="btn btn-download">
+            <button onClick={() => handleDownloadReportTasks()} className="btn btn-download">
               Download Report
             </button>
           </div>
@@ -143,7 +212,7 @@ const Report = () => {
                       <td>{item.item_id}</td>
                       <td>{item.item_name}</td>
                       <td>{item.item_description}</td>
-                      <td>{item.leave_date}</td>
+                      <td>{new Date(item.leave_date).toISOString().split("T")[0]}</td>
                       <td>
                         <Link to={`/admin/user_details/` + item.employee_id} className="btn btn-custom btn-sm">
                           View Details
@@ -171,14 +240,14 @@ const Report = () => {
           <div className="input-group">
             <select 
               value={historyDateRange} 
-              onChange={(e) => setHistoryDateRange(e.target.value)} 
+              onChange={(e) => setHistoryDateRange(Number(e.target.value))} 
               className="small-input">
-              <option value="">Select Timeframe</option>
-              <option value="lastWeek">Last Week</option>
-              <option value="lastMonth">Last Month</option>
-              <option value="lastYear">Last Year</option>
+              <option value="0">Select Timeframe</option>
+              <option value="1">Last Week</option>
+              <option value="2">Last Month</option>
+              <option value="3">Last Year</option>
             </select>
-            <button onClick={() => handleDownloadReport('history')} className="btn btn-download">
+            <button onClick={() => handleDownloadReportHistory()} className="btn btn-download">
               Download Report
             </button>
           </div>
@@ -201,7 +270,7 @@ const Report = () => {
                       <td>{item.item_id}</td>
                       <td>{item.item_name}</td>
                       <td>{item.item_description}</td>
-                      <td>{item.leave_date}</td>
+                      <td>{new Date(item.leave_date).toISOString().split("T")[0]}</td>
                       <td>
                         <Link to={`/admin/user_details/` + item.employee_id} className="btn btn-custom btn-sm">
                           View Details

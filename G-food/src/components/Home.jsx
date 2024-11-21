@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link } from "react-router-dom";
 import { AuthContext } from './AuthContext';
 import axios from 'axios';
-import './Home.css'; // Import the CSS file
+import '../styles/Home.css'; // Import the CSS file
 
 const Home = () => {
   const { user } = useContext(AuthContext); 
