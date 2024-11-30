@@ -1,102 +1,117 @@
-/* General Button Styles */
-.btn {
-    border-radius: 30px;  /* Smooth round corners */
-    font-size: 16px;  /* Slightly larger text for readability */
-    padding: 10px 20px;
-    text-transform: capitalize;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Subtle shadow effect */
-  }
-  
-  /* Primary Button (Edit Details) */
-  .btn-primary {
-    background-color: #3498db;
-    color: white;
-    border: 2px solid #3498db;
-  }
-  
-  .btn-primary:hover {
-    background-color: #2980b9;
-    border-color: #2980b9;
-    transform: translateY(-1px);  /* Lift effect */
-  }
-  
-  .btn-primary:active {
-    background-color: #1f6f99;
-    border-color: #1f6f99;
-    transform: translateY(0);
-  }
-  
-  /* Success Button (Add Item) */
-  .btn-success {
-    background-color: #A3D9A5;  /* Softer muted green */
-    color: white;
-    border: 2px solid #A3D9A5;
-  }
-  
-  .btn-success:hover {
-    background-color: #8EC68E;  /* Slightly darker green for hover */
-    border-color: #8EC68E;
-    transform: translateY(-1px);
-  }
-  
-  .btn-success:active {
-    background-color: #6D9B6D;  /* Darker, calm green for active */
-    border-color: #6D9B6D;
-    transform: translateY(0);
-  }
-  
-  /* Danger Button (Delete Item / Delete User) */
-  .btn-danger {
-    background-color: #e74c3c;
-    color: white;
-    border: 2px solid #e74c3c;
-  }
-  
-  .btn-danger:hover {
-    background-color: #c0392b;
-    border-color: #c0392b;
-    transform: translateY(-1px);
-  }
-  
-  .btn-danger:active {
-    background-color: #a93226;
-    border-color: #a93226;
-    transform: translateY(0);
-  }
-  
-  /* Warning Button (Start Leave Process) */
-  .btn-warning {
-    background-color: #F1C27D;  /* Softer pastel yellow */
-    color: white;
-    border: 2px solid #F1C27D;
-  }
-  
-  .btn-warning:hover {
-    background-color: #F0B56D;  /* Slightly darker pastel yellow for hover */
-    border-color: #F0B56D;
-    transform: translateY(-1px);
-  }
-  
-  .btn-warning:active {
-    background-color: #E79E5A;  /* Muted darker yellow for active */
-    border-color: #E79E5A;
-    transform: translateY(0);
-  }
-  
-  /* Disabled Button Styles */
-  .btn:disabled {
-    background-color: #bdc3c7;
-    border-color: #bdc3c7;
-    cursor: not-allowed;
-    opacity: 0.6;  /* Slightly faded for disabled state */
-  }
-  
-  /* Additional Padding for Small Buttons (e.g., Delete Item) */
-  .btn-sm {
-    padding: 6px 12px;
-    font-size: 14px;
-  }
-  
+/* General Container */
+.user-details-container {
+  background-color: #f4f4f9;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* Header Section */
+.header-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header-section h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #343a40;
+}
+
+/* Navbar Section */
+.navbar-custom {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Section Title */
+.section-title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #495057;
+}
+
+/* Buttons */
+.custom-btn {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.custom-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.primary-btn {
+  background-color: #001f3f;
+  color: white;
+}
+
+.danger-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.warning-btn {
+  background-color: #ffc107;
+  color: #343a40;
+}
+
+.success-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.info-btn {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.outline-btn {
+  background-color: transparent;
+  border: 2px solid #007bff;
+  color: #007bff;
+}
+
+.outline-btn:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Details Section */
+.details-section {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Equipment Section */
+.equipment-section {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Actions Section */
+.actions-section {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}

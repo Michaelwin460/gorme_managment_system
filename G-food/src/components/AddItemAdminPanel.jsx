@@ -31,8 +31,6 @@ const AddItemAdminPanel = () => {
 
   // console.log(category);
   
-
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -50,7 +48,10 @@ const AddItemAdminPanel = () => {
         else alert(res.data.Error + " on submit form");
       })
       .catch((err) => console.log(err));
-  };
+  
+  
+  
+    };
   
 
   return (
@@ -123,7 +124,22 @@ const AddItemAdminPanel = () => {
             />
           </div>
 
-          <button className="btn btn-success w-100 rounded-0 mb-2">Add Item to list</button>
+          <label 
+              className="btn btn-primary btn-sm m-2"
+              style={{ backgroundColor: '#001f3f', color: 'white' }}
+            >
+            Add File
+            <input
+              type="file"
+              accept=".pdf"
+              onChange={(event) => handleFileUpload(event, item)}
+              style={{ display: "none" }} 
+            />
+          </label>
+          <button 
+            className="btn btn-success btn-sm m-2"
+            style={{ backgroundColor: '#001f3f', color: 'white' }}
+          >Add Item to list</button>
         </form>
       </div>
     </div>

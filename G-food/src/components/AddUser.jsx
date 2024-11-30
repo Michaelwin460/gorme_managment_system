@@ -190,7 +190,10 @@ const AddUser = () => {
               }}
             />
           </div>
-          <button className="btn btn-success w-100 rounded-0 mb-2">Add</button>       
+          <button 
+            className="btn btn-success w-100 rounded-0 mb-2"
+            style={{ backgroundColor: '#001f3f', color: 'white' }}
+          >Add</button>       
         </form>
       </div>
 

@@ -55,7 +55,11 @@ const DepAndCat = () => {
           </tbody>
         </table>
       </div>
-      <Link to='/admin/add_department' className='btn btn-primary d-flex justify-content-center mb-3'>Add Department</Link>
+      <Link 
+        to='/admin/add_department' 
+        className='btn btn-primary d-flex justify-content-center mb-3'
+        style={{ backgroundColor: '#001f3f', color: 'white' }}
+      >Add Department</Link>
 
       <div className='d-flex justify-content-center mt-3'>
         <h4>Equipment Category List</h4>
@@ -82,7 +86,12 @@ const DepAndCat = () => {
           </tbody>
         </table>
       </div>
-      <Link to='/admin/add_equipment_category' className='btn btn-success d-flex justify-content-center mb-3'>Add Category To Equipment</Link>
+      <Link 
+        to='/admin/add_equipment_category' 
+        className='btn btn-success d-flex justify-content-center mb-3'
+        style={{ backgroundColor: '#001f3f', color: 'white' }}
+
+      >Add Category To Equipment</Link>
     </div>
   );
 }

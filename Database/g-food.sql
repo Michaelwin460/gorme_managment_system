@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: נובמבר 11, 2024 בזמן 11:33 PM
+-- Generation Time: דצמבר 01, 2024 בזמן 12:07 AM
 -- גרסת שרת: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -80,6 +80,7 @@ CREATE TABLE `equipment` (
   `employee_id` varchar(15) NOT NULL,
   `start_date` date DEFAULT current_timestamp(),
   `leave_date` date DEFAULT NULL,
+  `file_name` varchar(150) DEFAULT NULL,
   `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -87,14 +88,15 @@ CREATE TABLE `equipment` (
 -- הוצאת מידע עבור טבלה `equipment`
 --
 
-INSERT INTO `equipment` (`id`, `item_category`, `item_name`, `item_description`, `item_id`, `employee_id`, `start_date`, `leave_date`, `status`) VALUES
-(3, 2, 'Tablet tab 10', '15.5 Inch, color: black, shiomi ', '128975', '123', '2024-10-09', '0000-00-00', 'leaving'),
-(4, 1, 'Toyota Land cruiser', '2022, 6 cylinder, Turbo', '12398456', '123', '2024-10-09', '0000-00-00', 'leaving'),
-(5, 1, 'Toyota corola', 'Model: 2016, color: white', '4568521', '123', '2024-10-10', '0000-00-00', 'leaving'),
-(6, 2, 'Lenovo 13', 'O.S: Windows, 5GR ', '12355556', '123', '2024-10-10', '0000-00-00', 'leaving'),
-(7, 2, 'Charger', 'Type C, Double Entry', '456821', '4865854', '2024-10-10', NULL, 'active'),
-(8, 1, 'Scoda Octavia', 'Model 2020, color: black', '52598747', '4865854', '2024-10-10', NULL, 'active'),
-(9, 1, 'Oudi A8', 'Model 2024, Color: Black', '25465897', '4865854', '2024-10-10', NULL, 'active');
+INSERT INTO `equipment` (`id`, `item_category`, `item_name`, `item_description`, `item_id`, `employee_id`, `start_date`, `leave_date`, `file_name`, `status`) VALUES
+(3, 2, 'Tablet tab 10', '15.5 Inch, color: black, shiomi ', '128975', '123', '2024-10-09', NULL, 'file_1732992206286.pdf', 'active'),
+(4, 1, 'Toyota Land cruiser', '2022, 6 cylinder, Turbo', '12398456', '123', '2024-10-09', NULL, NULL, 'active'),
+(5, 1, 'Toyota corola', 'Model: 2016, color: white', '4568521', '123', '2024-10-10', NULL, NULL, 'active'),
+(6, 2, 'Lenovo 13', 'O.S: Windows, 5GR ', '12355556', '123', '2024-10-10', NULL, NULL, 'active'),
+(10, 1, 'Boing 707', 'privet jet ', '456789', '6459823546', '2024-11-14', '2025-02-21', NULL, 'leaving'),
+(11, 1, 'Helicopter', '5 blades, combat', '65485236', '586497', '2024-11-15', '2025-02-15', NULL, 'leaving'),
+(12, 3, 'pen', 'pilot 0.4', '', '545', '2024-11-20', NULL, NULL, 'active'),
+(13, 3, 'Cheap', 'just a cheap for dining room', '', '4114415', '2024-11-28', '2025-03-02', NULL, 'leaving');
 
 -- --------------------------------------------------------
 
@@ -145,12 +147,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `user_id`, `name`, `password`, `email`, `phone`, `image`, `department_id`, `role`, `start_date`, `leave_date`, `status`) VALUES
-(32, '123', 'Moshe Moshe', '$2b$10$fgQEHiuRlECcL9xL0dmXxu7xxTYa7QrGOkr32sR7QoJL3mNAY2PhW', 'moshonov@gmail.com', '053311157', 'image_1729253438634.png', 4, 'employee', '2024-11-04', '0000-00-00', 'leaving'),
-(38, '4865854', 'David', '$2b$10$BfYuA8zs69VnJKlgvqeq8uIYPMy.nEd0Xn0vyTpyyK7z/XpyKkCna', 'd@gmail.com', '0584569871', 'image_1729253460403.jpg', 3, 'employee', '2024-10-28', '0000-00-00', 'leaving'),
-(42, '4114415', 'adminos', '123', 'admin@gmail.com', '034896587', 'image_1729253475447.jpg', 3, 'admin', '0000-00-00', NULL, 'active'),
-(48, '586497', 'Eli Chaviv', '$2b$10$CSQNRgEIvVNmuzQugIEf0OcuXObBxe6ygTsS8Ynxe37dAyVzuNrU6', 'chavivi@gmail.com', '025645245', 'image_1729253496958.png', 6, 'admin', '2024-11-02', '0000-00-00', 'active'),
+(32, '123', 'Moshe Moshe', '$2b$10$3CQshyoewIh4xQgj0L7j5u5wMhVeY9cCGjctWkwxgkLh8SzZ1uHiO', 'moshonov@gmail.com', '053311157', 'image_1729253438634.png', 4, 'employee', '2024-11-22', NULL, 'active'),
+(42, '4114415', 'adminos', '$2b$10$ENv123eAR.XmKWx.qXk3..35J3Wj3TdIXh8xQWzB8Qirw.0dz8.9q', 'admin@gmail.com', '034896587', 'image_1729253475447.jpg', 3, 'admin', '0000-00-00', '2025-03-02', 'leaving'),
+(48, '586497', 'Eli Chaviv', '$2b$10$tJyReAnBcXfz4H3sFFKxLOTJtnkslAoClUxFfZGhT6d/VPQKsaK6e', 'chavivi@gmail.com', '025645245', 'image_1729253496958.png', 6, 'admin', '2024-11-01', '2025-02-14', 'leaving'),
 (49, '45695', 'Avi Avivim', '$2b$10$VfVSDnDMyjDn4VFkp1apA.9cL2fCZ.Jz0xaoxl8Hpz/RJnLpujbj6', 'avivim@gmail.com', '025652595', 'image_1729253514035.png', 4, 'admin', '2024-10-30', '0000-00-00', 'active'),
-(51, '12365478', 'Chamudi Chamudi', '$2b$10$sfJNfhCcy.U5clclTW3lUOWnW0WeulJd1hNDOJtyvucIJwfXBFs5e', 'chamudi@gmail.com', '059658256', 'image_1729379619034.jpeg', 6, 'itemCategoryAdmin', '2024-09-26', '0000-00-00', 'active');
+(51, '12365478', 'Chamudi Chamudi', '$2b$10$sfJNfhCcy.U5clclTW3lUOWnW0WeulJd1hNDOJtyvucIJwfXBFs5e', 'chamudi@gmail.com', '059658256', 'image_1729379619034.jpeg', 6, 'itemCategoryAdmin', '2024-09-26', '0000-00-00', 'active'),
+(52, '6459823546', 'Yos Hamatos', '$2b$10$Cq5qna3OJfvZdwWuCZI/K.GgyQOSvTuxMoZYdChn2jujMGJBM2/Ly', 'matostos@gmail.com', '41856425', 'image_1731537854736.png', 4, 'employee', '2024-11-14', '2025-02-21', 'leaving'),
+(53, '545', 'Jesy Jane', '$2b$10$char0QzKyzZv0BsBAf/UWOF9FSH8zfi6JbJ3c/51oTsB6QTL9Zhva', 'jes@gmail.com', '23456894', 'image_1732145027806.jpg', 5, 'employee', '2024-11-21', '2024-11-21', 'active');
 
 --
 -- Indexes for dumped tables
@@ -207,7 +210,7 @@ ALTER TABLE `department`
 -- AUTO_INCREMENT for table `equipment`
 --
 ALTER TABLE `equipment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `equipment_category`
@@ -219,7 +222,7 @@ ALTER TABLE `equipment_category`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- הגבלות לטבלאות שהוצאו

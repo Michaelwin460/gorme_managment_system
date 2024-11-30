@@ -25,112 +25,9 @@ const upload = multer({
 // end imag eupload
 
 
-//download file functions
-//
-const createPDF = (data, title, fields) => {
-  const doc = new PDFDocument();
-  doc.fontSize(18).text(title, { align: "center" });
-  doc.moveDown();
-
-  // Add filter details to the PDF
-  doc.fontSize(12);
-  fields.forEach((field) => {
-    doc.text(`${field.label}: ${field.value}`);
-  });
-  doc.moveDown();
-
-  // Table headers
-  const tableHeaders = Object.keys(data[0] || {});
-  tableHeaders.forEach((header) => doc.text(header, { continued: true }));
-  doc.moveDown();
-
-  // Table data
-  data.forEach((row) => {
-    Object.values(row).forEach((value) => {
-      doc.text(value, { continued: true });
-    });
-    doc.moveDown();
-  });
-
-  return doc;
-};
-// Endpoint for downloading tasks report
-router.post("/download-tasks-report", async (req, res) => {
-  const { name, id, dateRange } = req.body;
-
-  // Handle date range if it's not passed correctly, use default
-  const startDate = dateRange?.start || "0000-00-00";  // Default start date
-  const endDate = dateRange?.end || "0000-00-00";      // Default end date
-
-  // SQL query to fetch tasks data based on the filters
-  const sql = `
-    SELECT * FROM tasks 
-    WHERE (name LIKE ? OR id LIKE ?) 
-    AND (leave_date BETWEEN ? AND ?)
-  `;
-
-  con.query(
-    sql,
-    [name || "%", id || "%", startDate, endDate],
-    (err, result) => {
-      if (err) {
-        return res.json({ Status: false, Error: "Query Error" });
-      }
-
-      // Generate PDF report
-      const doc = createPDF(result, "Tasks Report", [
-        { label: "Name Filter", value: name || "N/A" },
-        { label: "ID Filter", value: id || "N/A" },
-        { label: "Date Range", value: `${startDate} to ${endDate}` },
-      ]);
-
-      // Set headers for file download
-      res.setHeader("Content-Disposition", "attachment; filename=\"tasks-report.pdf\"");
-      res.setHeader("Content-Type", "application/pdf");
-      doc.pipe(res);
-      doc.end();
-    }
-  );
-});
-// Endpoint for downloading history report
-router.post("/download-history-report", async (req, res) => {
-  const { dateRange } = req.body;
-
-  // Handle date range if not passed correctly, use default
-  const startDate = dateRange?.start || "0000-00-00";  // Default start date
-  const endDate = dateRange?.end || "0000-00-00";      // Default end date
-
-  // SQL query to fetch history data based on the date range
-  const sql = `
-    SELECT * FROM history 
-    WHERE (leave_date BETWEEN ? AND ?)
-  `;
-
-  con.query(
-    sql,
-    [startDate, endDate],
-    (err, result) => {
-      if (err) {
-        return res.json({ Status: false, Error: "Query Error" });
-      }
-
-      // Generate PDF report
-      const doc = createPDF(result, "History Report", [
-        { label: "Date Range", value: `${startDate} to ${endDate}` },
-      ]);
-
-      // Set headers for file download
-      res.setHeader("Content-Disposition", "attachment; filename=\"history-report.pdf\"");
-      res.setHeader("Content-Type", "application/pdf");
-      doc.pipe(res);
-      doc.end();
-    }
-  );
-});
-//end of download functions
-
 
 //print function with multer
+
 // router.post('/print-pdf', upload.single('file'), async (req, res) => {
 //   const filePath = path.join(__dirname, req.file.path);
 //   try {
@@ -142,6 +39,7 @@ router.post("/download-history-report", async (req, res) => {
 //     res.status(500).send('Error printing');
 //   }
 // });
+
 //end of print function
 
 
@@ -218,7 +116,6 @@ router.get("/equipment_category", (req, res) => {
     return res.json({ Status: true, Result: result });
   });
 });
-
 
 
 router.post("/add_user", upload.single('image'), (req, res) => {
@@ -304,6 +201,33 @@ router.get("/equipment_by_category/:isEquipmentManager", (req, res) => {
   });
 });
 
+router.get("/equipment_by_category_and_user/:isEquipmentManager", (req, res) => {
+  const category = parseInt(req.params.isEquipmentManager, 10); // Convert to number
+  // console.log(category);
+
+  let sql;
+  if (category === -1) {
+    sql = `SELECT equipment.*, users.name, users.email, users.phone 
+            FROM equipment
+            JOIN users
+            ON equipment.employee_id = users.user_id
+            ` ;
+  } else {
+    sql = `SELECT equipment.*, users.name, users.email, users.phone 
+            FROM equipment
+            JOIN users
+            ON equipment.employee_id = users.user_id
+            WHERE equipment.item_category = (?)
+            `;
+  }
+
+  con.query(sql, category === -1 ? [] : [category], (err, result) => { // Only pass parameter when needed
+    if (err) return res.json({ Status: false, Error: "Query Error " + err });
+    // console.log(result);
+    return res.json({ Status: true, Result: result });
+  });
+});
+
 router.post("/insert_new_item", (req, res) => {
   const sql = `
         INSERT INTO equipment (item_category, item_name, item_description, item_id, employee_id, start_date, status) 
@@ -319,7 +243,7 @@ router.post("/insert_new_item", (req, res) => {
       req.body.item_description,
       req.body.item_id,
       req.body.employee_id,
-      req.body.start_date.toString().split("T")[0],
+      req.body.start_date,
       req.body.status
   ];
 
@@ -331,6 +255,23 @@ router.post("/insert_new_item", (req, res) => {
     return res.json({ Status: true });
   });
 
+});
+
+router.post("/upload_item_file", upload.single("file"), (req, res) => {
+  const { item_name } = req.body;
+  if (!req.file || !item_name) {
+    return res.status(400).json({ Status: false, Error: "Invalid data." });
+  }
+
+  // Save the file path and associated item_id to the database
+  const file_name = req.file.filename;
+  // console.log(file_name);
+  
+  const query = "UPDATE equipment SET file_name = ? WHERE item_name = ?";
+  con.query(query, [file_name, item_name], (err, result) => {
+    if (err) return res.status(500).json({ Status: false, Error: err.message });
+    res.status(200).json({ Status: true, Message: "File uploaded successfully." });
+  });
 });
 
 router.delete("/delete_equipment_by_employee/:id", (req, res) => {
@@ -358,7 +299,7 @@ router.delete("/delete_item/:id", (req, res) => {
 router.put("/update_user_status/:id", (req, res) => {
   const id = req.params.id;
   const update_status = req.body.update_status;
-  const leave_date = (req.body.leave_date) ? req.body.leave_date.toString().split("T")[0] : req.body.leave_date;
+  const leave_date = req.body.leave_date;
 
   const sql = `update users set status = (?), leave_date = (?) WHERE user_id = (?)`;
 
@@ -371,7 +312,7 @@ router.put("/update_user_status/:id", (req, res) => {
 router.put("/update_item_status/:id", (req, res) => {
   const id = req.params.id;
   const item_status = req.body.update_status;
-  const leave_date = req.body.leave_date.toString().split("T")[0];
+  const leave_date = req.body.leave_date;
 
   const sql = `update equipment set status = (?), leave_date = (?) WHERE item_id = (?)`;
 
@@ -384,7 +325,7 @@ router.put("/update_item_status/:id", (req, res) => {
 router.put("/update_all_items_status/:id", (req, res) => {
   const id = req.params.id;
   const item_status = req.body.update_status;
-  const leave_date = (req.body.leave_date) ? req.body.leave_date.toString().split("T")[0] : req.body.leave_date;
+  const leave_date = req.body.leave_date;
 
   const sql = `update equipment set status = (?), leave_date = (?) WHERE employee_id = (?)`;
 

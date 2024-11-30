@@ -255,11 +255,17 @@ const EditUser = () => {
           ) : (
             <div></div>
           )}
-          <button className="btn btn-success w-100 rounded-0 mb-2">Update</button>
+          <button 
+            className="btn btn-success w-100 rounded-0 mb-2"
+            style={{ backgroundColor: '#001f3f', color: 'white' }}
+
+          >Update</button>
           <button
-          className="btn btn-warning"
-          onClick={handleTurnActive}
-          disabled={user.status === "active"}
+            className="btn btn-warning"
+            onClick={handleTurnActive}
+            disabled={user.status === "active"}
+            style={{ backgroundColor: '#001f3f', color: 'white' }}
+
           >
             Turn Active Again
           </button>        

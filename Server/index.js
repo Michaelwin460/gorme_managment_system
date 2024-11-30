@@ -2,7 +2,7 @@ import express from "express";
 import cors from 'cors'
 import con from "./utils/db.js";
 import { routes } from "./Routes/Routes.js";
-import { employeeRouter } from "./Routes/EmployeeRoutes.js";
+// import { employeeRouter } from "./Routes/EmployeeRoutes.js";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
@@ -19,7 +19,7 @@ app.use(cors({
 app.use(express.json())
 app.use(cookieParser())
 app.use('/auth', routes)
-app.use('/employee', employeeRouter)
+// app.use('/employee', employeeRouter)
 app.use(express.static('Public'))
 
 const verifyUser = (req, res, next) => {
