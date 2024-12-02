@@ -79,6 +79,15 @@ const Dashboard = () => {
                   <span className="ms-2 d-none d-sm-inline">Reports</span>
                 </Link>
               </li>
+              <li className="w-100">
+                <Link
+                  to="/admin/notifications"
+                  className="nav-link px-0 align-middle text-white"
+                >
+                  <i className="fs-4 bi-person ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">Notifications</span>
+                </Link>
+              </li>
               <li className="w-100" >
               <Link
                   className="nav-link px-0 align-middle text-white"

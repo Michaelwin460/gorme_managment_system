@@ -408,13 +408,22 @@ router.get("/count_leaving_users", (req, res) => {
   });
 });
 
-// router.get("/admins", (req, res) => {
-//   const sql = "SELECT * FROM admin";
-//   con.query(sql, (err, result) => {
-//     if (err) return res.json({ Status: false, Error: "Query Error" });
-//     return res.json({ Status: true, Result: result });
-//   });
-// });
+
+router.put("/update_user_time_alarm/:email", (req, res) => {
+  const email = req.params.email;
+  const date = req.body.date_range;
+  const time = req.body.time_range;
+
+  // console.log("date " + date, "time " + time);
+  // console.log("email " + email);
+
+  const sql = `update equipment_category set date_alarm = (?), time_alarm = (?) WHERE manager_email = (?)`;
+
+  con.query(sql, [date, time, email], (err, result) => {
+    if (err) return res.json({ Status: false, Error: err });
+    return res.json({ Status: true });
+  });
+});
 
 
 router.get("/logout", (req, res) => {

@@ -1,20 +1,22 @@
-/* Reports.css */
-
+/* General container styling */
 .report-container {
   max-width: 800px; /* Set a maximum width for better alignment */
   margin: 0 auto; /* Center the report container */
   padding: 20px;
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', 'Montserrat', sans-serif;
 }
 
+/* Navbar styles */
 .navbar h1 {
   font-size: 24px;
   color: #333;
   margin-bottom: 10px;
   border-bottom: 2px solid #ccc;
   padding-bottom: 10px;
+  font-family: 'Montserrat', sans-serif;
 }
 
+/* Section styling */
 .section {
   margin-bottom: 20px;
   padding: 10px 15px;
@@ -36,6 +38,8 @@
   font-size: 18px;
   color: #007bff;
   margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
 }
 
 .section p {
@@ -44,6 +48,7 @@
   margin-bottom: 8px;
 }
 
+/* Input group and button styles */
 .input-group {
   display: flex;
   align-items: center;
@@ -56,6 +61,7 @@
   width: 100px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-family: 'Roboto', sans-serif;
 }
 
 .btn-download {
@@ -66,6 +72,8 @@
   border-radius: 4px;
   cursor: pointer;
   margin-left: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
 }
 
 .btn-download:hover {
@@ -77,8 +85,10 @@
   color: #333;
   font-size: 14px;
   margin-top: 10px;
+  font-family: 'Roboto', sans-serif;
 }
 
+/* Scrollable content */
 .scrollable-content {
   max-height: 200px;
   overflow-y: auto;
@@ -89,6 +99,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
+  font-family: 'Roboto', sans-serif;
 }
 
 .table th, .table td {
@@ -102,18 +113,13 @@
   color: #555;
 }
 
-.user-pic {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
 .section-separator {
   height: 1px;
   background-color: #ddd;
   margin: 20px 0;
 }
 
+/* Toggle button styles */
 .toggle-button {
   background-color: #e0e0e0;
   color: #333;
@@ -123,31 +129,9 @@
   border-radius: 3px;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-family: 'Roboto', sans-serif;
 }
 
 .toggle-button:hover {
   background-color: #c0c0c0;
-}
-
-.highlight-tasks {
-  border: 2px solid #007bff;
-  padding: 12px;
-  border-radius: 8px;
-  margin-top: 10px;
-}
-
-.tasks-header {
-  font-size: 16px;
-  font-weight: bold;
-  color: #0056b3;
-  border-bottom: 1px solid #007bff;
-  padding-bottom: 5px;
-  margin-bottom: 8px;
-}
-
-.input-group select {
-  padding: 5px;
-  width: 130px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }

@@ -6,7 +6,7 @@ import { routes } from "./Routes/Routes.js";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import sendEmailsToManagers from "./utils/auto-mailer.js";
+import scheduleEmails from "./utils/auto-mailer.js";
 
 
 const app = express()
@@ -179,7 +179,7 @@ app.post("/login", async (req, res) => {
   
 
 
-sendEmailsToManagers();
+scheduleEmails();
 // sendManagerEmail('mwtr2559@gmail.com', 'Reminder: Users Equipment Return Check', emailContent);
 
 app.listen(3000, () => {

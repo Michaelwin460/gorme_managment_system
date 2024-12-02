@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: דצמבר 01, 2024 בזמן 12:07 AM
+-- Generation Time: דצמבר 02, 2024 בזמן 01:56 AM
 -- גרסת שרת: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -63,7 +63,8 @@ INSERT INTO `department` (`id`, `name`, `manager_name`, `manager_email`) VALUES
 (4, 'Designing', ' Nickol Nicey ', 'niceli@gmail.com'),
 (5, 'Human Resources', 'adam heyman', 'human@gmail.com'),
 (6, 'Cleaning', 'clonico clinex', 'clxks@gmail.com'),
-(7, 'Transport', 'Joe Transporter', 'transport@gmail.com');
+(7, 'Transport', 'Joe Transporter', 'transport@gmail.com'),
+(8, 'Tayasim', 'tayas tayaony', 'tayaony@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -91,12 +92,12 @@ CREATE TABLE `equipment` (
 INSERT INTO `equipment` (`id`, `item_category`, `item_name`, `item_description`, `item_id`, `employee_id`, `start_date`, `leave_date`, `file_name`, `status`) VALUES
 (3, 2, 'Tablet tab 10', '15.5 Inch, color: black, shiomi ', '128975', '123', '2024-10-09', NULL, 'file_1732992206286.pdf', 'active'),
 (4, 1, 'Toyota Land cruiser', '2022, 6 cylinder, Turbo', '12398456', '123', '2024-10-09', NULL, NULL, 'active'),
-(5, 1, 'Toyota corola', 'Model: 2016, color: white', '4568521', '123', '2024-10-10', NULL, NULL, 'active'),
+(5, 1, 'Toyota corola', 'Model: 2016, color: white', '4568521', '123', '2024-10-10', '2024-12-01', NULL, 'done'),
 (6, 2, 'Lenovo 13', 'O.S: Windows, 5GR ', '12355556', '123', '2024-10-10', NULL, NULL, 'active'),
 (10, 1, 'Boing 707', 'privet jet ', '456789', '6459823546', '2024-11-14', '2025-02-21', NULL, 'leaving'),
 (11, 1, 'Helicopter', '5 blades, combat', '65485236', '586497', '2024-11-15', '2025-02-15', NULL, 'leaving'),
 (12, 3, 'pen', 'pilot 0.4', '', '545', '2024-11-20', NULL, NULL, 'active'),
-(13, 3, 'Cheap', 'just a cheap for dining room', '', '4114415', '2024-11-28', '2025-03-02', NULL, 'leaving');
+(13, 3, 'Cheap', 'just a cheap for dining room', '', '4114415', '2024-11-28', '2025-03-02', 'file_1733070173802.pdf', 'leaving');
 
 -- --------------------------------------------------------
 
@@ -108,18 +109,20 @@ CREATE TABLE `equipment_category` (
   `id` int(10) NOT NULL,
   `category_name` varchar(30) NOT NULL,
   `manager_name` varchar(30) NOT NULL,
-  `manager_email` varchar(30) NOT NULL
+  `manager_email` varchar(30) NOT NULL,
+  `date_alarm` enum('daily','weekly','monthly') DEFAULT 'weekly',
+  `time_alarm` enum('10:00:00','12:00:00','14:00:00') DEFAULT '10:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- הוצאת מידע עבור טבלה `equipment_category`
 --
 
-INSERT INTO `equipment_category` (`id`, `category_name`, `manager_name`, `manager_email`) VALUES
-(1, 'car', 'caron caroni', 'chamudi@gmail.com'),
-(2, 'computers', 'yaron yadan', 'yaron@gmail.com'),
-(3, 'stuff to borrow', 'moshe zuchmir', 'zuchmir@gmail.com'),
-(4, 'tablets', 'yossef tobul', 'tablani@gmail.com');
+INSERT INTO `equipment_category` (`id`, `category_name`, `manager_name`, `manager_email`, `date_alarm`, `time_alarm`) VALUES
+(1, 'car', 'caron caroni', 'chamudi@gmail.com', 'daily', '12:00:00'),
+(2, 'computers', 'yaron yadan', 'yaron@gmail.com', 'weekly', '10:00:00'),
+(3, 'stuff to borrow', 'moshe zuchmir', 'zuchmir@gmail.com', 'weekly', '10:00:00'),
+(4, 'tablets', 'yossef tobul', 'tablani@gmail.com', 'weekly', '10:00:00');
 
 -- --------------------------------------------------------
 
@@ -147,7 +150,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `user_id`, `name`, `password`, `email`, `phone`, `image`, `department_id`, `role`, `start_date`, `leave_date`, `status`) VALUES
-(32, '123', 'Moshe Moshe', '$2b$10$3CQshyoewIh4xQgj0L7j5u5wMhVeY9cCGjctWkwxgkLh8SzZ1uHiO', 'moshonov@gmail.com', '053311157', 'image_1729253438634.png', 4, 'employee', '2024-11-22', NULL, 'active'),
+(32, '123', 'Moshe Moshe', '$2b$10$y8Bf/QI37zhr69vRI4lAhu8HoGO33B4NSMoN4Hhc6mXV286ROIODG', 'moshonov@gmail.com', '053311157', 'image_1729253438634.png', 5, 'employee', '2024-11-21', '0000-00-00', 'active'),
 (42, '4114415', 'adminos', '$2b$10$ENv123eAR.XmKWx.qXk3..35J3Wj3TdIXh8xQWzB8Qirw.0dz8.9q', 'admin@gmail.com', '034896587', 'image_1729253475447.jpg', 3, 'admin', '0000-00-00', '2025-03-02', 'leaving'),
 (48, '586497', 'Eli Chaviv', '$2b$10$tJyReAnBcXfz4H3sFFKxLOTJtnkslAoClUxFfZGhT6d/VPQKsaK6e', 'chavivi@gmail.com', '025645245', 'image_1729253496958.png', 6, 'admin', '2024-11-01', '2025-02-14', 'leaving'),
 (49, '45695', 'Avi Avivim', '$2b$10$VfVSDnDMyjDn4VFkp1apA.9cL2fCZ.Jz0xaoxl8Hpz/RJnLpujbj6', 'avivim@gmail.com', '025652595', 'image_1729253514035.png', 4, 'admin', '2024-10-30', '0000-00-00', 'active'),
@@ -204,7 +207,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `equipment`

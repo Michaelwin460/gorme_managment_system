@@ -1,4 +1,3 @@
-
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Login from './components/Login'
@@ -6,6 +5,7 @@ import Dashboard from './components/Dashboard'
 import Home from './components/Home'
 import User from './components/User'
 import Report from './components/Report'
+import Notifications from './components/Notifications.jsx'
 import DepAndCat from './components/DepAndCat'
 import AddDepartment from './components/AddDepartment'
 import AddCategory from './components/AddCategory.jsx'
@@ -40,6 +40,7 @@ function App() {
             <Route path='/admin/user' element={<User/>}></Route>
             <Route path='/admin/user_details/:id' element={<AdminDisplayUser/>}></Route>
             <Route path='/admin/report' element={<Report/>}></Route>
+            <Route path='/admin/notifications' element={<Notifications/>}></Route>
             <Route path='/admin/depAndCat' element={<DepAndCat/>}></Route>
             <Route path='/admin/add_department' element={<AddDepartment/>}></Route>
             <Route path='/admin/add_equipment_category' element={<AddCategory/>}></Route>
