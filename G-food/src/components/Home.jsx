@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { AuthContext } from './AuthContext';
 import axios from 'axios';
 import '../styles/Home.css'; // Import the CSS file
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'; 
+
 
 const Home = () => {
   const { user } = useContext(AuthContext); 
@@ -11,6 +14,12 @@ const Home = () => {
   const [leavingItemsRecord, setLeavingItemsRecord] = useState([]);
   const [isEquipmentManager, setIsEquipmentManager] = useState(-1);
   const [searchQuery, setSearchQuery] = useState(''); // New state for search
+
+  // useEffect(() => {
+  //   // Initialize Bootstrap Popovers
+  //   const popoverTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="popover"]'));
+  //   popoverTriggerList.map((popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl));
+  // }, []);
 
   useEffect(() => {
     taskCount();
@@ -64,15 +73,27 @@ const Home = () => {
   return (
     <div className="home-container">
       <div className="p-3 d-flex justify-content-around mt-3">
-        <div className="summary-card">
+        <div className="summary-card" style={{ backgroundColor: '#C900FE', color: '#fff' }} >
           <h4>Tasks To Complete:</h4>
           <hr />
           <div className="summary-total">
             <h5>Total:</h5>
             <h5>{taskTotal}</h5>
           </div>
+          {/* <div>
+            //q. mark with popover
+            <i
+              className="bi bi-question-circle"
+              data-bs-toggle="popover"
+              data-bs-placement="top"
+              title="Explanation"
+              data-bs-content="This is the explanation of the section. Click this icon for more details."
+              style={{ cursor: 'pointer', fontSize: '18px', color: '#007bff', marginLeft: '10px' }}
+            ></i>
+          </div> */}
+
         </div>
-        <div className="summary-card">
+        <div className="summary-card" style={{ backgroundColor: '#C900FE', color: '#fff' }}>
           <h4>Users About To Leave:</h4>
           <hr />
           <div className="summary-total">

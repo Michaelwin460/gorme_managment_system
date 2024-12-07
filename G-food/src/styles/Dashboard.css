@@ -1,0 +1,43 @@
+/* Sidebar styles */
+.sidebar-custom {
+  
+    background-color: #fff; /* White background */
+    border-right: 2px solid #C900FE; /* Gentle purple border */
+    font-family: 'Roboto', sans-serif; /* Apply Roboto font to the entire sidebar */
+  }
+  
+  .dashboard-logo {
+    width: 120px;
+    height: auto;
+  }
+  
+  .nav-link {
+    font-family: inherit; /* Inherits Roboto font from the sidebar */
+  }
+  
+  .nav-link i {
+    color: #5142F0; /* Purple icons */
+  }
+  
+  .nav-link span {
+    color: #5142F0; /* Purple text */
+  }
+  
+  .nav-link:hover {
+    color: #C900FE; /* Purple hover effect */
+  }
+  
+  /* Top bar styles */
+  .top-bar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #F9F9FF; /* Gentle purple */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  h4 {
+    font-family: 'Roboto', sans-serif;
+    color: #5142F0; /* Purple text */
+  }
+  

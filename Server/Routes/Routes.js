@@ -43,26 +43,6 @@ const upload = multer({
 //end of print function
 
 
-// router.post("/adminlogin", (req, res) => {
-//   const sql = "SELECT * FROM admin WHERE email = ? AND password = ?";
-//   con.query(sql, [req.body.email, req.body.password], (err, result) => {
-//     if (err)
-//       return res.json({ loginStatus: false, Error: "Query error: " + err });
-//     if (result.length > 0) {
-//       const email = result[0].email;
-//       const token = jwt.sign(
-//         { role: "admin", email: email, id: result[0].id },
-//         "g-food_secret_key",
-//         { expiresIn: "1d" }
-//       );
-//       res.cookie("token", token);
-//       return res.json({ loginStatus: true });
-//     } 
-//     else
-//       return res.json({ loginStatus: false, Error: "Wrong Email or Password" });
-//   });
-// });
-
 router.post("/add_department", (req, res) => {
   const sql = "INSERT INTO department (`name`, `manager_name`, `manager_email`) VALUES (?)";
   console.log(req.body);
@@ -90,6 +70,19 @@ router.get("/department", (req, res) => {
   });
 });
 
+router.put("/update_department", (req, res) => {
+  const {id, name, manager_name, manager_email} = req.body;
+
+  // console.log(id, name, manager_name, manager_email);
+  
+  const sql = `update department set name = (?), manager_name = (?), manager_email = (?) WHERE id = (?)`;
+
+  con.query(sql, [name, manager_name, manager_email, id], (err, result) => {
+    if (err) return res.json({ Status: false, Error: err });
+    return res.json({ Status: true });
+  });
+});
+
 router.post("/add_equipment_category", (req, res) => {
   const sql = "INSERT INTO equipment_category (`category_name`, `manager_name`, `manager_email`) VALUES (?)";
   console.log(req.body);
@@ -114,6 +107,37 @@ router.get("/equipment_category", (req, res) => {
   con.query(sql, (err, result) => {
     if (err) return res.json({ Status: false, Error: "Query Error" });
     return res.json({ Status: true, Result: result });
+  });
+});
+
+router.put("/update_category", (req, res) => {
+  const {id, category_name, manager_name, manager_email} = req.body;
+
+  // console.log("date " + date, "time " + time);
+  // console.log("email " + email);
+
+  const sql = `update equipment_category set category_name = (?), manager_name = (?), manager_email = (?) WHERE id = (?)`;
+
+  con.query(sql, [category_name, manager_name, manager_email, id], (err, result) => {
+    if (err) return res.json({ Status: false, Error: err });
+    return res.json({ Status: true });
+  });
+
+});
+
+router.put("/update_user_time_alarm/:email", (req, res) => {
+  const email = req.params.email;
+  const date = req.body.date_range;
+  const time = req.body.time_range;
+
+  // console.log("date " + date, "time " + time);
+  // console.log("email " + email);
+
+  const sql = `update equipment_category set date_alarm = (?), time_alarm = (?) WHERE manager_email = (?)`;
+
+  con.query(sql, [date, time, email], (err, result) => {
+    if (err) return res.json({ Status: false, Error: err });
+    return res.json({ Status: true });
   });
 });
 
@@ -407,24 +431,6 @@ router.get("/count_leaving_users", (req, res) => {
     return res.json({ Status: true, Result: result });
   });
 });
-
-
-router.put("/update_user_time_alarm/:email", (req, res) => {
-  const email = req.params.email;
-  const date = req.body.date_range;
-  const time = req.body.time_range;
-
-  // console.log("date " + date, "time " + time);
-  // console.log("email " + email);
-
-  const sql = `update equipment_category set date_alarm = (?), time_alarm = (?) WHERE manager_email = (?)`;
-
-  con.query(sql, [date, time, email], (err, result) => {
-    if (err) return res.json({ Status: false, Error: err });
-    return res.json({ Status: true });
-  });
-});
-
 
 router.get("/logout", (req, res) => {
   res.clearCookie('token');

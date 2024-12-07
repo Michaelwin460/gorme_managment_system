@@ -16,6 +16,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import AdminDisplayUser from './components/AdminDisplayUser'
 import AddItemAdminPanel from './components/AddItemAdminPanel'
 import { AuthProvider } from './components/AuthContext';
+import Equipment from './components/Equipment.jsx'
 
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
             <Route path='/admin/add_user' element={<AddUser/>}></Route>
             <Route path='/admin/Edit_user/:id' element={<EditUser/>}></Route>
             <Route path='/admin/add_item/user/:id' element={<AddItemAdminPanel/>}></Route>
+            <Route path='/admin/equipment' element={<Equipment/>}></Route>
           </Route >
         </Routes>
       </BrowserRouter>

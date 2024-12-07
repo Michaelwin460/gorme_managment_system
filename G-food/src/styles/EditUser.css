@@ -1,0 +1,91 @@
+/* Edit User Panel Styles */
+.edit-user-container {
+    background-color: #ffffff; /* White background for the main container */
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.edit-user-form {
+    background-color: #f4f4f9; /* Gentle background for the form */
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Inputs and Selects */
+.edit-user-form .form-label {
+    font-weight: bold;
+    color: #0033D9; /* Primary blue color for labels */
+}
+
+.edit-user-form .form-control {
+    border-radius: 0.5rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.edit-user-form .form-select {
+    border-radius: 0.5rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Buttons */
+.edit-user-form button {
+    background-color: #0033D9; /* Match with primary color */
+    color: white;
+    font-weight: bold;
+    padding: 0.8rem 2rem;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.edit-user-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    background-color: #5142F0; /* Hover effect to match secondary color */
+}
+
+.edit-user-form .btn-warning {
+    background-color: #F600FE; /* Turn Active button with pinkish color */
+    color: white;
+}
+
+.edit-user-form .btn-warning:hover {
+    background-color: #C900FE; /* Darker pink hover effect */
+}
+
+.edit-user-form .btn-success {
+    background-color: #0033D9; /* Button color for Update */
+    color: white;
+}
+
+.edit-user-form .btn-success:hover {
+    background-color: #5142F0;
+}
+
+.edit-user-form .file-upload {
+    margin-bottom: 1rem;
+}
+
+.edit-user-form .col-12 {
+    margin-bottom: 1rem;
+}
+
+/* Input Fields */
+.edit-user-form input[type="text"], .edit-user-form input[type="date"], .edit-user-form input[type="number"], .edit-user-form select {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Optional: Adjust font styling for a clean, professional look */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9; /* Gentle background color for the body */
+}

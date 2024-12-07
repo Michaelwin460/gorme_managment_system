@@ -1,0 +1,147 @@
+/* General Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff; /* Outer background */
+    color: #333;
+  }
+  
+  h4 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 26px;
+    font-weight: bold;
+    color: #5142F0; /* Updated header color */
+  }
+  
+  /* Navbar Section */
+  .navbar-custom {
+    background-color: #C900FE; /* Bright magenta */
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-custom .btn {
+    font-size: 16px;
+    color: white;
+    background-color: #C900FE; /* Same as Add button */
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-custom .btn:hover {
+    background-color: #FF80FF; /* Lighter pink */
+  }
+  
+  /* Table Styling */
+  .table-custom {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #F9F9FF; /* Gentle background */
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  table.table-custom th {
+    color: white !important;
+  }
+  
+  .table-custom th, .table-custom td {
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  .table-custom th {
+    background-color: #5142F0; /* Soft purple */
+    color: white; /* White text for contrast */
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .table-custom td {
+    background-color: #ffffff; /* White background for rows */
+    color: #333;
+  }
+  
+  .table-custom tbody tr:hover {
+    background-color: #f1f1f1; /* Slight hover effect */
+  }
+  
+  /* Input Fields (for editing) */
+  .input-edit {
+    border: 1px solid #F600FE;
+    box-shadow: 0 0 5px rgba(246, 0, 254, 0.5);
+    transition: all 0.3s ease;
+  }
+  
+  .input-edit:focus {
+    border-color: #5142F0;
+    box-shadow: 0 0 8px rgba(81, 66, 240, 0.7);
+    outline: none;
+  }
+  
+  /* Action Buttons (Save, Cancel, Edit) */
+  .btn-success {
+    background-color: #C900FE; /* Bright magenta */
+    border: none;
+    color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-success:hover {
+    background-color: #FF80FF;
+  }
+  
+
+  .btn-secondary {
+    background-color: #b3b3b3; /* Stronger gray for better contrast */
+    border: 1px solid #999; /* Darker border for emphasis */
+    color: white; /* Ensures the text remains readable */
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #999; /* Darker gray on hover */
+}
+
+
+  /* .btn-secondary {
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #ccc;
+  } */
+  
+  .btn-warning {
+    background-color: #F600FE;
+    color: white;
+    border: none;
+  }
+  
+  .btn-warning:hover {
+    background-color: #FF80FF;
+  }
+  
+  /* Add Button */
+  .add-btn {
+    background-color: #C900FE; /* Bright magenta */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 18px;
+    width: 50%;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .add-btn:hover {
+    background-color: #FF80FF;
+  }
+  

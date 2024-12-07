@@ -23,3 +23,98 @@
     height: 300px;
     border-radius: 50%;
 }
+
+
+
+/* General Container */
+.user-page-container {
+    background-color: #f9f9fc;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: "Roboto";
+  }
+  
+  /* Header */
+  .user-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #0033d9;
+  }
+  
+  /* Search & Add Section */
+  .search-add-container {
+    border: 1px solid #c900fe;
+    border-radius: 8px;
+    padding: 1rem;
+    background: #f6f8ff;
+  }
+  
+  .primary-btn {
+    background-color: #5142f0;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .primary-btn:hover {
+    background-color: #c900fe;
+    color: white;
+    transform: translateY(-2px);
+  }
+  
+  /* Search Input */
+  .search-input {
+    border: 2px solid #f600fe;
+    border-radius: 6px;
+    padding: 0.5rem;
+  }
+  
+  /* Table Styles */
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .user-table thead {
+    background-color: #0033d9;
+    color: white;
+  }
+  
+  .user-table th,
+  .user-table td {
+    text-align: center;
+    padding: 0.75rem;
+    vertical-align: middle;
+  }
+  
+  .user-table tbody tr:hover {
+    background-color: #f6f8ff;
+  }
+  
+  .employee-img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: 2px solid #5142f0;
+  }
+  
+  /* Button */
+  .info-btn {
+    background-color: #c900fe;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .info-btn:hover {
+    background-color: #f600fe;
+    color: white;
+  }
+  

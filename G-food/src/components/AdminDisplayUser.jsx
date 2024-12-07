@@ -376,7 +376,7 @@ const AdminDisplayUser = () => {
   // );
 
   return (
-    <div className="user-details-container p-4">
+    <div className="user-details-container p-4 mt-4">
       {/* Header Section */}
       <header className="header-section">
         <h1>User Management</h1>

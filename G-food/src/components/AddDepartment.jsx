@@ -22,7 +22,7 @@ const AddDepartment = () => {
         axios.post('http://localhost:3000/auth/add_department', department)
         .then((res) => {
             if(res.data.Status)
-                navigate('/admin/department')
+                navigate('/admin/depAndCat')
             else
                 alert(res.data.Error)
         })

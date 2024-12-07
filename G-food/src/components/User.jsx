@@ -23,38 +23,30 @@ const User = () => {
   );
 
   return (
-    <div className="px-5 mt-2">
-      <div className="pt-3 d-flex justify-content-center">
-        <h4>Users List</h4>
+    <div className="user-page-container px-5 mt-4">
+      <div className="header d-flex justify-content-center">
+        <h4 className="user-title">Users List</h4>
       </div>
 
       <div
-        className="p-2 d-flex justify-content-between align-items-center"
+        className="search-add-container p-3 d-flex justify-content-between align-items-center"
         style={{ width: "100%", maxWidth: "800px", margin: "0 auto" }}
       >
-        <div>
-          <Link 
-              to="/admin/add_user" 
-              className="btn btn-success"
-              style={{ backgroundColor: '#001f3f', color: 'white' }}
-            >
-            Add User
-          </Link>
-        </div>
-        <div>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search by user name"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
+        <Link to="/admin/add_user" className="btn primary-btn">
+          Add User
+        </Link>
+        <input
+          type="text"
+          className="form-control search-input"
+          placeholder="Search by user name"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
       </div>
 
-      <div className="mt-3 d-flex justify-content-center">
+      <div className="table-container mt-4 d-flex justify-content-center">
         <div style={{ width: "100%", maxWidth: "800px" }}>
-          <table className="table">
+          <table className="table user-table">
             <thead>
               <tr>
                 <th>Name</th>
@@ -69,16 +61,16 @@ const User = () => {
                   <td>{e.name}</td>
                   <td>
                     <img
-                      src={`http://localhost:3000/Images/` + e.image}
-                      alt=""
-                      className="employee_img"
+                      src={`http://localhost:3000/Images/${e.image}`}
+                      alt="User"
+                      className="employee-img"
                     />
                   </td>
                   <td>{e.email}</td>
                   <td>
                     <Link
-                      to={`/admin/user_details/` + e.user_id}
-                      className="btn btn-info btn-sm me-2"
+                      to={`/admin/user_details/${e.user_id}`}
+                      className="btn info-btn btn-sm"
                     >
                       View Details
                     </Link>
