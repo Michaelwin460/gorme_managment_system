@@ -91,20 +91,40 @@ app.post("/login", async (req, res) => {
     
     // If user is an itemCategoryAdmin, fetch the category
     let category = -1;
+    let catName = '';
     if (user.role === "itemCategoryAdmin") {
       const sqlCategory = "SELECT * FROM equipment_category WHERE manager_email = ?";
       const categoryResult = await queryPromise(sqlCategory, [req.body.email]);
 
       if (categoryResult.length > 0) {
         category = categoryResult[0].id;
+        catName = categoryResult[0].category_name;
       }
     }
+
+        // If user is an itemCategoryAdmin, fetch the category
+        let department = -1;
+        let depName = '';
+        if (user.role === "departmentAdmin") {
+          const sqlDepartment = "SELECT * FROM department WHERE manager_email = ?";
+          const departmentResult = await queryPromise(sqlDepartment, [req.body.email]);
+    
+          if (departmentResult.length > 0) {
+            department = departmentResult[0].id;
+            depName = departmentResult[0].name;
+          }
+        }
+
+
 
     // Send the final response after all async operations are done
     return res.json({
       loginStatus: true,
       role: user.role,
       item_category_managment: category,
+      category_name: catName,
+      department_managment: department,
+      department_name: depName,
       id: user.user_id,
       email: user.email
     });

@@ -1,42 +1,84 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { useContext } from 'react';
-import { AuthContext } from './AuthContext';
+import "../styles/employeeDetails.css";
+import { AuthContext } from "./AuthContext";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const EmployeeDetails = () => {
   const { id } = useParams();
-  const { logout } = useContext(AuthContext);
-  const navigate = useNavigate();
   const [equipment, setEquipment] = useState([]);
-  const [user, setUser] = useState({});
-  const [showDetails, setShowDetails] = useState(false); 
-  
-  useEffect(() => {
-    // Fetch user details
-    axios
-      .get("http://localhost:3000/auth/users/" + id)
-      .then((res) => {
-        if (res.data.Status) {
-          setUser(res.data.Result[0]);
-        } else {
-          alert(res.data.Error);
-        }
-      })
-      .catch((err) => console.log(err));
+  const [requests, setRequests] = useState([]);
+  const [userDetails, setUserDetails] = useState({});
+  const [filter, setFilter] = useState("details");
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-    // Fetch equipment assigned to the employee
-    axios
-      .get(`http://localhost:3000/auth/equipment/employee/${id}`)
-      .then((res) => {
-        if (res.data.Status) {
-          setEquipment(res.data.Result);
-        } else {
-          alert(res.data.Error);
-        }
-      })
-      .catch((err) => console.log(err));
+  useEffect(() => {
+    fetchUserDetails();
+    fetchEquipment();
+    fetchRequests();
   }, []);
+
+  const fetchEquipment = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/auth/equipment/employee/${id}`
+      );
+      if (response.data.Status) {
+        setEquipment(response.data.Result);
+      } else {
+        alert(response.data.Error);
+      }
+    } catch (error) {
+      console.error("Error fetching equipment data: ", error);
+    }
+  };
+
+  const fetchUserDetails = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/auth/users/${id}`
+      );
+      if (response.data.Status) {
+        setUserDetails(response.data.Result[0]);
+      } else {
+        alert(response.data.Error);
+      }
+    } catch (error) {
+      console.error("Error fetching user details: ", error);
+    }
+  };
+
+  const fetchRequests = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/auth/requests_by_user/${id}`
+      );
+      if (response.data.Status) {
+        setRequests(response.data.Result);
+      } else {
+        alert(response.data.Error);
+      }
+    } catch (error) {
+      console.error("Error fetching requests: ", error);
+    }
+  };
+
+  const handleDeleteRequest = async (requestId) => {    
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/auth/delete_request_by/${requestId}`
+      );
+      if (response.data.Status) {
+        setRequests((prev) => prev.filter((req) => req.id !== requestId));
+      } else {
+        alert(response.data.Error);
+      }
+    } catch (error) {
+      console.error("Error deleting request: ", error);
+    }
+  };
 
   const handleLogout = () => {
     axios
@@ -45,7 +87,7 @@ const EmployeeDetails = () => {
         if (res.data.Status) {
           localStorage.removeItem("valid");
           logout();
-          navigate('/');
+          navigate("/");
         } else {
           alert(res.data.Error);
         }
@@ -54,102 +96,177 @@ const EmployeeDetails = () => {
   };
 
   return (
-    <div className="container mt-4">
-      {/* Header Section */}
-      <div className="text-center mb-4">
-        <h2 className="text-primary">Hello, {user.name || "Employee"}!</h2>
-        <p className="text-muted">Welcome to your profile page.</p>
-      </div>
+    <div className="employee-details-container hall-component">
+      {/* Header */}
+      <h1 className="employee-header">Hello {userDetails.name || "User"}!</h1>
+      <h2 className="employee-subheader">
+        Here you can manage your details, equipment, and requests
+      </h2>
 
-      {/* Button to Toggle Details */}
-      <div className="text-center mb-4">
-        <button
-          className="btn btn-outline-primary btn-lg"
-          onClick={() => setShowDetails(!showDetails)}
+      {/* Navbar Section */}
+      <nav className="employee-navbar">
+        <div
+          className={`navbar-section ${filter === "details" ? "selected" : ""}`}
+          onClick={() => setFilter("details")}
         >
-          {showDetails ? "Hide Details" : "Inspect Your Details"}
-        </button>
-      </div>
+          Your Details
+        </div>
+        <div
+          className={`navbar-section ${
+            filter === "equipment" ? "selected" : ""
+          }`}
+          onClick={() => setFilter("equipment")}
+        >
+          Your Equipment
+        </div>
+        <div
+          className={`navbar-section ${
+            filter === "requests" ? "selected" : ""
+          }`}
+          onClick={() => setFilter("requests")}
+        >
+          Your Requests
+        </div>
+      </nav>
 
-      {/* Employee Details Section */}
-      {showDetails && (
-        <div className="user-details bg-light border rounded p-4 mb-4">
-          <h4 className="text-secondary mb-3">Employee Details</h4>
-          <table className="table">
+      {/* Content Section */}
+      <div className="employee-content">
+        {filter === "details" && (
+          <table className="employee-table">
             <tbody>
               <tr>
-                <td><strong>User ID:</strong></td>
-                <td>{id}</td>
+                <th>User ID</th>
+                <td>{userDetails.id}</td>
               </tr>
               <tr>
-                <td><strong>Name:</strong></td>
-                <td>{user.name}</td>
+                <th>Name</th>
+                <td>{userDetails.name}</td>
               </tr>
               <tr>
-                <td><strong>Phone:</strong></td>
-                <td>{user.phone}</td>
+                <th>Email</th>
+                <td>{userDetails.email}</td>
               </tr>
               <tr>
-                <td><strong>Email:</strong></td>
-                <td>{user.email}</td>
+                <th>Phone</th>
+                <td>{userDetails.phone}</td>
               </tr>
               <tr>
-                <td><strong>Department:</strong></td>
-                <td>{user.department_id}</td>
+                <th>Start Date</th>
+                <td>
+                  {userDetails.start_date
+                    ? new Date(userDetails.start_date)
+                        .toISOString()
+                        .split("T")[0]
+                    : "N/A"}
+                </td>
               </tr>
-              <tr>
-                <td><strong>Status:</strong></td>
-                <td>{user.status}</td>
-              </tr>
-              <tr>
-                <td><strong>Start Date:</strong></td>
-                <td>{user.start_date ? user.start_date.toString().split("T")[0] : user.start_date}</td>
-              </tr>
-              {user.status !== "active" && (
+              {userDetails.status === "leaving" && (
                 <tr>
-                  <td><strong>Leaving Date:</strong></td>
-                  <td>{user.leaving_date}</td>
+                  <th>Leave Date</th>
+                  <td>
+                    {
+                      new Date(userDetails.leave_date)
+                        .toISOString()
+                        .split("T")[0]
+                    }
+                  </td>
                 </tr>
               )}
+              <tr>
+                <th>Status</th>
+                <td>{userDetails.status}</td>
+              </tr>
             </tbody>
           </table>
-        </div>
-      )}
+        )}
 
-      {/* Equipment List Section */}
-      <div className="equipment-list bg-light border rounded p-4">
-        <h4 className="text-secondary mb-3 text-center">Equipment Assigned</h4>
-        <table className="table table-striped">
-          <thead className="table-dark">
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Status</th>
-              <th>Start Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {equipment.map((item) => (
-              <tr key={item.item_id}>
-                <td>{item.item_name}</td>
-                <td>{item.item_description}</td>
-                <td>{item.status}</td>
-                <td>{item.start_date ? item.start_date.toString().split("T")[0] : item.start_date}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {filter === "equipment" &&
+          equipment.map((item) => (
+            <table className="employee-table" key={item.item_id}>
+              <tbody>
+                <tr>
+                  <th>Name</th>
+                  <td>{item.item_name}</td>
+                </tr>
+                <tr>
+                  <th>Description</th>
+                  <td>{item.item_description}</td>
+                </tr>
+                <tr>
+                  <th>Status</th>
+                  <td>{item.status}</td>
+                </tr>
+                <tr>
+                  <th>Start Date</th>
+                  <td>
+                    {item.start_date
+                      ? new Date(item.start_date).toISOString().split("T")[0]
+                      : "N/A"}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          ))}
+
+        {filter === "requests" &&
+          requests.map((request) => (
+            <table className="employee-table" key={request.id}>
+              <tbody>
+                <tr>
+                  <th>Status</th>
+                  <td>{request.status}</td>
+                </tr>
+                <tr>
+                  <th>Date</th>
+                  <td>
+                    {request.request_date
+                      ? new Date(request.request_date)
+                          .toISOString()
+                          .split("T")[0]
+                      : "N/A"}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Header</th>
+                  <td>{request.header}</td>
+                </tr>
+                <tr>
+                  <th>Body</th>
+                  <td>{request.body}</td>
+                </tr>
+                <tr>
+                  <th>Note</th>
+                  <td>{request.note}</td>
+                </tr>
+                <tr>
+                  <th>Actions</th>
+                  <td>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDeleteRequest(request.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          ))}
       </div>
 
-      {/* Logout Button */}
-      <div className="text-center mt-4">
+      {/* Action Buttons */}
+      <div className="action-buttons">
         <button
-          className="btn btn-danger btn-lg"
-          onClick={handleLogout}
+          className="btn btn-primary"
+          onClick={() => navigate(`../add_req/${id}`)}
         >
+          Add Request
+        </button>
+        <button className="btn btn-secondary" onClick={handleLogout}>
           Logout
         </button>
       </div>
+      {/* <Outlet/> */}
     </div>
   );
 };

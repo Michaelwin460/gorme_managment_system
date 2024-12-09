@@ -1,10 +1,14 @@
 /* Sidebar styles */
+
 .sidebar-custom {
-  
-    background-color: #fff; /* White background */
-    border-right: 2px solid #C900FE; /* Gentle purple border */
-    font-family: 'Roboto', sans-serif; /* Apply Roboto font to the entire sidebar */
-  }
+  width: 250px; /* Fixed width for the sidebar */
+  background-color: #fff; /* White background */
+  border-right: 2px solid #C900FE; /* Gentle purple border */
+  font-family: 'Roboto', sans-serif;
+  overflow-y: auto; /* Sidebar scrolls independently */
+  position: sticky;
+  top: 0;
+}
   
   .dashboard-logo {
     width: 120px;

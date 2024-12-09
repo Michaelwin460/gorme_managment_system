@@ -1,0 +1,88 @@
+.manage-item-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .header-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .header-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #0033d9; /* Primary color */
+    margin-bottom: 0.5rem;
+  }
+  
+  .header-description {
+    font-size: 1rem;
+    color: #555;
+    margin: 0;
+  }
+  
+  .add-item-container {
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 2rem;
+  }
+  
+  .add-item-form {
+    width: 100%;
+  }
+  
+  .add-item-form .form-label {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .add-item-form .form-control,
+  .add-item-form .form-select {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0.75rem;
+  }
+  
+  .add-item-form .form-control:disabled {
+    background-color: #eee;
+  }
+  
+  .add-item-form .btn {
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem;
+  }
+  
+  .add-item-form .btn-primary {
+    background-color: #0033d9;
+    border: none;
+  }
+  
+  .add-item-form .btn-primary:hover {
+    background-color: #5142f0;
+  }
+  
+  .add-item-form .btn-danger {
+    background-color: #c900fe;
+    border: none;
+  }
+  
+  .add-item-form .btn-danger:hover {
+    background-color: #f600fe;
+  }
+  
+  .add-item-form .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+  }
+  
+  .add-item-form .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+  
+  .add-item-form .form-control:focus,
+  .add-item-form .form-select:focus {
+    border-color: #0033d9;
+    box-shadow: 0 0 0 0.2rem rgba(0, 51, 217, 0.25);
+  }
+  

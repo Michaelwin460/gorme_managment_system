@@ -94,8 +94,10 @@ const Dashboard = () => {
           <div className="p-2 d-flex justify-content-center shadow top-bar">
             <h4>Equipment Management System</h4>
           </div>
+          <div>
 
           <Outlet />
+          </div>
         </div>
       </div>
     </div>

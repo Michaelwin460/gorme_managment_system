@@ -136,18 +136,18 @@ const AdminDisplayUser = () => {
 
   const handleUpdateStatusItem = (itemId) => {
     const item = equipment.find((item) => item.item_id === itemId);
-    const enableItemUpdate = item && item.status !== "done";
+    const enableItemUpdate = item && item.status !== "availble";
     const currentDate = new Date().toISOString().split("T")[0];
     if(enableItemUpdate)
     {
       // Confirm before deleting an equipment item
       if (window.confirm("Are you sure you want to update this item?")) {
         axios
-          .put(`http://localhost:3000/auth/update_item_status/${itemId}`, { update_status: "done", leave_date: currentDate })
+          .put(`http://localhost:3000/auth/update_item_status/${itemId}`, { update_status: "availble", leave_date: currentDate })
           .then((res) => {
             if (res.data.Status) {
               const updatedEquipment = equipment.map((item) =>
-                item.item_id === itemId ? { ...item, status: "done", leave_date: currentDate} : item
+                item.item_id === itemId ? { ...item, status: "availble", leave_date: currentDate} : item
               );
               setEquipment(updatedEquipment);            
             } else alert(res.data.Error);

@@ -16,7 +16,15 @@ import ProtectedRoute from './components/ProtectedRoute'
 import AdminDisplayUser from './components/AdminDisplayUser'
 import AddItemAdminPanel from './components/AddItemAdminPanel'
 import { AuthProvider } from './components/AuthContext';
-import Equipment from './components/Equipment.jsx'
+import Stock from './components/Equipment.jsx'
+import AddItemToStock from './components/AddItemToStock.jsx'
+import ManageItemInStock from './components/ManageItemInStock.jsx'
+import Requests from './components/Requests.jsx'
+import AddRequestEmployee from './components/AddRequestEmployee.jsx'
+import EmployeeLayout from './components/EmployeeLayout.jsx'
+
+
+ 
 
 
 function App() {
@@ -27,11 +35,16 @@ function App() {
         <Routes>
 
           <Route path='/' element={<Login />} />
-          <Route path='/employee_details/:id' element={
+
+          <Route path='/employee' element={
               <ProtectedRoute>
-                <EmployeeDetails />
+                <EmployeeLayout />
               </ProtectedRoute>
-            } />
+            } >
+            <Route path=':id' element={<EmployeeDetails/>}></Route>
+            <Route path='add_req/:id' element={<AddRequestEmployee/>}></Route>
+          </Route>
+
           <Route path='/admin' element={
               <ProtectedRoute>
                 <Dashboard />
@@ -48,7 +61,10 @@ function App() {
             <Route path='/admin/add_user' element={<AddUser/>}></Route>
             <Route path='/admin/Edit_user/:id' element={<EditUser/>}></Route>
             <Route path='/admin/add_item/user/:id' element={<AddItemAdminPanel/>}></Route>
-            <Route path='/admin/equipment' element={<Equipment/>}></Route>
+            <Route path='/admin/equipment' element={<Stock/>}></Route>
+            <Route path='/admin/add_item_to_stock' element={<AddItemToStock/>}></Route>
+            <Route path='/admin/manage_item_in_stock/:id' element={<ManageItemInStock/>}></Route>
+            <Route path='/admin/requests' element={<Requests/>}></Route>
           </Route >
         </Routes>
       </BrowserRouter>

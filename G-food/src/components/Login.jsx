@@ -22,7 +22,7 @@ const Login = () => {
           if(result.data.role == "admin")
             navigate('/admin');
           else
-            navigate('/employee_details/' + result.data.id);
+            navigate('/employee/' + result.data.id);
         } 
         else 
           console.log("Error: " + result.data.Error);
@@ -41,6 +41,9 @@ const Login = () => {
           const userData = {
             role: result.data.role,
             item_category_managment: result.data.item_category_managment,  
+            category_name: result.data.category_name,
+            department_managment: result.data.department_managment,
+            department_name: result.data.department_name,
             id: result.data.id,
             email: result.data.email,
           };
@@ -49,7 +52,7 @@ const Login = () => {
           if (role === "admin" || role === "itemCategoryAdmin") {
             navigate('/admin');
           } else if (role === "employee") {
-            navigate(`/employee_details/${result.data.id}`);
+            navigate(`/employee/${result.data.id}`);
           }
           // Add more role handling as needed
         } else {
