@@ -73,15 +73,28 @@ const Home = () => {
   return (
     <div className="home-container">
       <div className="p-3 d-flex justify-content-around mt-3">
-        <div className="summary-card" style={{ backgroundColor: '#C900FE', color: '#fff' }} >
-          <h4>Tasks To Complete:</h4>
+
+      <div className="summary-card " >
+          <h4 >Pending Requests:</h4>
+          <p className='text-center'>Review and Approve</p>
           <hr />
           <div className="summary-total">
             <h5>Total:</h5>
-            <h5>{taskTotal}</h5>
+            <h5>{leavingUsersTotal}</h5>
+          </div>
+        </div>
+
+
+        <div className="summary-card" >
+          <h4 >Manage Stock:</h4>
+          <p className='text-center'>Edit and Track Equipment</p>
+          <hr />
+          <div className="summary-total">
+            <h5>In Stock:</h5>
+            <h5>1582</h5>
           </div>
           {/* <div>
-            //q. mark with popover
+            //question mark with popover explanation
             <i
               className="bi bi-question-circle"
               data-bs-toggle="popover"
@@ -93,8 +106,10 @@ const Home = () => {
           </div> */}
 
         </div>
-        <div className="summary-card" style={{ backgroundColor: '#C900FE', color: '#fff' }}>
-          <h4>Users About To Leave:</h4>
+
+        <div className="summary-card" >
+          <h4>Offboarding Users</h4>
+          <p className='text-center'>Review & Approve</p>
           <hr />
           <div className="summary-total">
             <h5>Total:</h5>
@@ -106,7 +121,7 @@ const Home = () => {
       <div className="mt-4 d-flex flex-column align-items-center">
         <div className="table-container">
           <div className="table-header">
-            <h3 className="text-center">Items About To Return:</h3>
+            <h3 className="text-center">Process Equipment Return:</h3>
             <input
               type="text"
               placeholder="Search by Name or Item ID"

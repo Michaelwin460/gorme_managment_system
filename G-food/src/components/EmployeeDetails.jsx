@@ -11,6 +11,8 @@ const EmployeeDetails = () => {
   const [requests, setRequests] = useState([]);
   const [userDetails, setUserDetails] = useState({});
   const [filter, setFilter] = useState("details");
+  const [editNoteId, setEditNoteId] = useState(null); // ID of the request being edited
+  const [editedNote, setEditedNote] = useState(""); // Edited note value
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -65,7 +67,7 @@ const EmployeeDetails = () => {
     }
   };
 
-  const handleDeleteRequest = async (requestId) => {    
+  const handleDeleteRequest = async (requestId) => {
     try {
       const response = await axios.delete(
         `http://localhost:3000/auth/delete_request_by/${requestId}`
@@ -78,6 +80,48 @@ const EmployeeDetails = () => {
     } catch (error) {
       console.error("Error deleting request: ", error);
     }
+  };
+
+  const handleSendBackToAdmin = (requestId, new_note) => {
+    axios
+      .put(`http://localhost:3000/auth/send_feedback/${requestId}`, {
+        status: "by_category_manager",
+        note: new_note
+      })
+      .then((res) => {
+        if (res.data.Status) {
+          alert("Feedback was sent successfully.");
+        } else {
+          alert(res.data.Error);
+        }
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const handleEditNote = (id, note) => {
+    setEditNoteId(id);
+    setEditedNote(note);
+  };
+
+  const saveEditedNote = (id) => {
+    axios
+      .put(`http://localhost:3000/auth/update_request_note/${id}`, {
+        note: editedNote,
+      })
+      .then((res) => {
+        if (res.data.Status) {
+          setRequests((prev) =>
+            prev.map((req) =>
+              req.id === id ? { ...req, note: editedNote } : req
+            )
+          );
+          setEditNoteId(null);
+          alert("Note updated successfully.");
+        } else {
+          alert(res.data.Error);
+        }
+      })
+      .catch((err) => console.error(err));
   };
 
   const handleLogout = () => {
@@ -100,7 +144,7 @@ const EmployeeDetails = () => {
       {/* Header */}
       <h1 className="employee-header">Hello {userDetails.name || "User"}!</h1>
       <h2 className="employee-subheader">
-        Here you can manage your details, equipment, and requests
+        Here you can inspect your details, equipment, and send requests
       </h2>
 
       {/* Navbar Section */}
@@ -136,7 +180,7 @@ const EmployeeDetails = () => {
             <tbody>
               <tr>
                 <th>User ID</th>
-                <td>{userDetails.id}</td>
+                <td>{userDetails.user_id}</td>
               </tr>
               <tr>
                 <th>Name</th>
@@ -164,11 +208,9 @@ const EmployeeDetails = () => {
                 <tr>
                   <th>Leave Date</th>
                   <td>
-                    {
-                      new Date(userDetails.leave_date)
-                        .toISOString()
-                        .split("T")[0]
-                    }
+                    {new Date(userDetails.leave_date)
+                      .toISOString()
+                      .split("T")[0]}
                   </td>
                 </tr>
               )}
@@ -236,7 +278,22 @@ const EmployeeDetails = () => {
                 </tr>
                 <tr>
                   <th>Note</th>
-                  <td>{request.note}</td>
+                  <td>
+                  {editNoteId === request.id ? (
+                      <div>
+                        <textarea
+                          type="text"
+                          value={editedNote}
+                          onChange={(e) => setEditedNote(e.target.value)}
+                        />
+
+                      </div>
+                    ) : (
+                      <>
+                        {request.note}
+                      </>
+                    )}
+                  </td>
                 </tr>
                 <tr>
                   <th>Actions</th>
@@ -247,6 +304,32 @@ const EmployeeDetails = () => {
                     >
                       Delete
                     </button>
+                    <button
+                      className="btn btn-success btn-sm m-3"
+                      onClick={() =>
+                        handleSendBackToAdmin(request.id, request.note)
+                      }
+                      disabled={request.status !== "by_user"}
+                    >
+                      Resend to admin
+                    </button>
+                    {editNoteId === request.id ? (
+                        <button
+                          className="btn btn-success btn-sm"
+                          onClick={() => saveEditedNote(request.id)}
+                        >
+                          Save note
+                        </button>
+                    ) : (
+                      <>
+                        <button
+                          className="btn btn-primary btn-sm"
+                          onClick={() => handleEditNote(request.id, request.note)}
+                        >
+                          Edit note
+                        </button>
+                      </>
+                    )}
                   </td>
                 </tr>
               </tbody>
@@ -266,7 +349,6 @@ const EmployeeDetails = () => {
           Logout
         </button>
       </div>
-      {/* <Outlet/> */}
     </div>
   );
 };

@@ -33,14 +33,14 @@ const Notifications = () => {
 
         {/* Content Section */}
         <div className="content-section p-4 bg-light rounded shadow">
-          <h4 className="mb-4 text-primary">Set Tasks Reminder:</h4>
+          <h4 className="notif-header mb-4 text-primary">Set Tasks Reminder:</h4>
 
           {/* Selection Options */}
           <div className="row g-4">
             {/* Date Cycle Selector */}
             <div className="col-12">
               <div className="card shadow-sm p-3 border-primary">
-                <h5 className="text-secondary">Select Date:</h5>
+                <h5 className="text-secondary">Select Date Cycle:</h5>
                 <select
                   value={dateRange || ""}
                   onChange={(e) => setDateRange(e.target.value)}
@@ -57,7 +57,7 @@ const Notifications = () => {
             {/* Time Range Selector */}
             <div className="col-12">
               <div className="card shadow-sm p-3 border-primary">
-                <h5 className="text-secondary">Select Time:</h5>
+                <h5 className="text-secondary">Select Time Cycle:</h5>
                 <select
                   value={timeRange || ""}
                   onChange={(e) => setTimeRange(e.target.value)}

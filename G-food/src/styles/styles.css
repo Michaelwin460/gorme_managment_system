@@ -1,5 +1,5 @@
 .loginPage {
-    background: url('images/employeems.jpeg');
+    background: url('images/login_shot.png');
     background: linear-gradient(rgba(11, 11, 11, 0.5), rgba(10, 10, 10, 0.5)), url("images/employeems.jpeg");
     background-position: center;
     background-repeat: no-repeat;
@@ -40,6 +40,7 @@
     font-size: 26px;
     font-weight: bold;
     color: #0033d9;
+    font-family: 'Montserrat';
   }
   
   /* Search & Add Section */
@@ -49,18 +50,24 @@
     padding: 1rem;
     background: #f6f8ff;
   }
+
+  .primary-btn{
+    background-color: #fdcc4d;
+    font-family: 'Montserrat';
+  }
   
-  .primary-btn {
-    background-color: #5142f0;
+  .btn {
+    background-color: #fdcc4d;
     color: white;
     font-weight: bold;
     border: none;
     padding: 0.5rem 1.5rem;
     border-radius: 6px;
     transition: all 0.3s ease-in-out;
+    font-family: 'Montserrat';
   }
   
-  .primary-btn:hover {
+  .btn:hover {
     background-color: #c900fe;
     color: white;
     transform: translateY(-2px);
@@ -71,6 +78,7 @@
     border: 2px solid #f600fe;
     border-radius: 6px;
     padding: 0.5rem;
+    font-family: 'Montserrat';
   }
   
   /* Table Styles */

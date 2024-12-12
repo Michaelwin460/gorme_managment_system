@@ -1,8 +1,16 @@
 .notif-container {
     padding-top: 20px;
+    font-family: 'Montserrat';
+
+  }
+
+  .notif-header {
+    font-family: 'Montserrat';
+
   }
   
   .content-wrapper {
     margin: 0 auto;
+    
   }
   

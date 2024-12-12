@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
+import '../styles/Styles.css'
 
 const Login = () => {
   const navigate = useNavigate();
@@ -67,6 +68,7 @@ const Login = () => {
 
   return (
     <div className='d-flex justify-content-center align-items-center vh-100 loginPage'>
+
       <div className='p-3 rounded w-25 border loginForm'>
         <div className='text-warning'>
           {error && error}

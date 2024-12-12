@@ -22,6 +22,7 @@ import ManageItemInStock from './components/ManageItemInStock.jsx'
 import Requests from './components/Requests.jsx'
 import AddRequestEmployee from './components/AddRequestEmployee.jsx'
 import EmployeeLayout from './components/EmployeeLayout.jsx'
+import AdminManageRequest from './components/AdminManageRequest.jsx'
 
 
  
@@ -65,6 +66,7 @@ function App() {
             <Route path='/admin/add_item_to_stock' element={<AddItemToStock/>}></Route>
             <Route path='/admin/manage_item_in_stock/:id' element={<ManageItemInStock/>}></Route>
             <Route path='/admin/requests' element={<Requests/>}></Route>
+            <Route path='/admin/manage_request/:id' element={<AdminManageRequest/>}></Route>
           </Route >
         </Routes>
       </BrowserRouter>

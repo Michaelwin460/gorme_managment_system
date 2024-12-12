@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import jsPDF from 'jspdf'
 import '../styles/AdminDisplayUser.css'
+import "bootstrap-icons/font/bootstrap-icons.css"; // For icons
+
 
 const AdminDisplayUser = () => {
   const { id } = useParams();
@@ -92,24 +94,6 @@ const AdminDisplayUser = () => {
     }
   };
   
-  const handleDeleteItem = (itemId) => {
-    const item = equipment.find((item) => item.item_id === itemId);
-    const enableItemDeletion = item && item.status !== "active";
-    if(enableItemDeletion)
-    {
-      // Confirm before deleting an equipment item
-      if (window.confirm("Are you sure you want to delete this item?")) {
-        axios
-          .delete(`http://localhost:3000/auth/delete_item/${itemId}`)
-          .then((res) => {
-            if (res.data.Status) {
-              setEquipment(equipment.filter((item) => item.item_id !== itemId));
-            } else alert(res.data.Error);
-          })
-          .catch((err) => console.log(err));
-      }
-    }
-  };
 
   const handleFileUpload = (event, item) => {
     const file = event.target.files[0];
@@ -382,13 +366,24 @@ const AdminDisplayUser = () => {
         <h1>User Management</h1>
       </header>
   
+      {/* User Info Header */}
+      <div className="user-info-header">
+        {/* <h5>Name: {user.name}</h5> */}
+        <h5>Name: Yael Mashan</h5>
+        {/* <h5>Department: {user.department_name}</h5> */}
+        <h5>Department: Human Resources</h5>
+        <h5>ID: 1654356</h5>
+        {/* <h5>ID: {user.user_id}</h5> */}
+      </div>
+  
       {/* Navbar Section */}
       <nav className="navbar-custom mb-4">
         <button
-          className="custom-btn primary-btn"
+          className="custom-btn "
+          style={{backgroundColor: 'gray', color: 'white'}}
           onClick={() => setShowDetails(!showDetails)}
         >
-          {showDetails ? "Hide Details" : "Inspect User"}
+          {showDetails ? "Hide Details" : "View Details"}
         </button>
         <button
           className="custom-btn primary-btn"
@@ -404,7 +399,8 @@ const AdminDisplayUser = () => {
           Delete User
         </button>
         <button
-          className="custom-btn primary-btn"
+          className="custom-btn "
+          style={{backgroundColor: "#fdcc4d", color: 'white'}}
           onClick={handleLeaveProcess}
           disabled={status === "leaving"}
         >
@@ -413,52 +409,50 @@ const AdminDisplayUser = () => {
       </nav>
   
       {/* Details Section */}
-      {showDetails && (        
+      {showDetails && (
         <table className="table border">
           <tbody>
             <tr>
-              <td className="text-center mb-3 "><strong>User ID:</strong></td>
+              <td className="text-center mb-3"><strong>User ID:</strong></td>
               <td>{user.user_id}</td>
-              <td className="text-center mb-3 "><strong>Name:</strong></td>
+              <td className="text-center mb-3"><strong>Name:</strong></td>
               <td>{user.name}</td>
             </tr>
             <tr>
-              <td className="text-center mb-3 "><strong>Phone:</strong></td>
+              <td className="text-center mb-3"><strong>Phone:</strong></td>
               <td>{user.phone}</td>
-              <td className="text-center mb-3 "><strong>Email:</strong></td>
+              <td className="text-center mb-3"><strong>Email:</strong></td>
               <td>{user.email}</td>
             </tr>
             <tr>
-              <td className="text-center mb-3 "><strong>Department:</strong></td>
+              <td className="text-center mb-3"><strong>Department:</strong></td>
               <td>{user.department_name}</td>
-              <td className="text-center mb-3 "><strong>Status:</strong></td>
+              <td className="text-center mb-3"><strong>Status:</strong></td>
               <td>{status}</td>
             </tr>
             <tr>
-              <td className="text-center mb-3 "><strong>Start Date:</strong></td>
+              <td className="text-center mb-3"><strong>Start Date:</strong></td>
               <td>{new Date().toISOString().split("T")[0]}</td>
               {status !== "active" && (
-              <>
-                <td className="text-center mb-3 "><strong>Leaving Date:</strong></td>
-                <td>
-                  {status === "leaving" ? (
-                    <input
-                      type="date"
-                      value={leavingDate}
-                      onChange={(e) => handleUpdateLeavingDate(e.target.value)}
-                    />
-                  ) : (
-                    user.leaving_date
-                  )}
-                </td>
-              </>
-            )}
-
+                <>
+                  <td className="text-center mb-3"><strong>Leaving Date:</strong></td>
+                  <td>
+                    {status === "leaving" ? (
+                      <input
+                        type="date"
+                        value={leavingDate}
+                        onChange={(e) => handleUpdateLeavingDate(e.target.value)}
+                      />
+                    ) : (
+                      user.leaving_date
+                    )}
+                  </td>
+                </>
+              )}
             </tr>
           </tbody>
         </table>
       )}
-
   
       {/* Equipment Section */}
       <div className="equipment-section p-3 mb-4">
@@ -478,34 +472,28 @@ const AdminDisplayUser = () => {
                 <td>{item.item_name}</td>
                 <td>{item.item_description}</td>
                 <td>{item.status}</td>
-                <td>
-                <button
-                    className="custom-btn outline-btn-sm m-1"
-                    onClick={() => handleDeleteItem(item.item_id)}
-                    disabled={item.status === "active"}
-                  >
-                    Delete
-                  </button>
+                <td className="table-actions">
                   <button
-                    className="custom-btn outline-btn-sm m-1"
+                    className="yellow-btn "
                     onClick={() => handleUpdateStatusItem(item.item_id)}
                   >
                     Return Item
                   </button>
-                  <label className="custom-btn outline-btn-sm m-1">
+                  <label className="gray-btn">
+
                     Add File
                     <input
                       type="file"
                       accept=".pdf"
                       onChange={(event) => handleFileUpload(event, item)}
-                      style={{ display: "none" }} 
+                      style={{ display: "none"}}
                     />
                   </label>
                   <a
                     href={`http://localhost:3000/images/${item.file_name}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn custom-btn outline-btn-sm m-1"
+                    className="btn gray-btn "
                   >
                     View File
                   </a>
@@ -519,20 +507,22 @@ const AdminDisplayUser = () => {
       {/* Actions Section */}
       <div className="actions-section">
         <button
-          className="custom-btn primary-btn"
+          className="custom-btn"
+          style={{backgroundColor: '#fdcc4d', color: 'white'}}
           onClick={() => navigate(`/admin/add_item/user/${id}`)}
         >
-          Add Item
+          <i className="bi bi-plus"></i> Add Item
         </button>
         <button
           className="custom-btn primary-btn"
           onClick={generateItemFile}
         >
-          Download Requeest Template
+          Download Request Template
         </button>
       </div>
     </div>
   );
+  
   
 
 };

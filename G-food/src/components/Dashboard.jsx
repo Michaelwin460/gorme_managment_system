@@ -92,7 +92,7 @@ const Dashboard = () => {
         <div className="col p-0 m-0">
           {/* Top Bar */}
           <div className="p-2 d-flex justify-content-center shadow top-bar">
-            <h4>Equipment Management System</h4>
+            <h4>Equipment Request and Return Manager</h4>
           </div>
           <div>
 

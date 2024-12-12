@@ -2,29 +2,30 @@ import express from "express";
 import con from "../utils/db.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import multer from 'multer'
-import path from 'path'
-import printer from 'pdf-to-printer'
-import fs from 'fs'
+import multer from "multer";
+import path from "path";
+import printer from "pdf-to-printer";
+import fs from "fs";
 import PDFDocument from "pdfkit";
 
 const router = express.Router();
 
-// image upload 
+// image upload
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-      cb(null, 'Public/Images')
+    cb(null, "Public/Images");
   },
   filename: (req, file, cb) => {
-      cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname))
-  }
-})
+    cb(
+      null,
+      file.fieldname + "_" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
 const upload = multer({
-  storage: storage
-})
+  storage: storage,
+});
 // end imag eupload
-
-
 
 //print function with multer
 
@@ -43,21 +44,58 @@ const upload = multer({
 //end of print function
 
 router.get("/requests_by_user/:id", (req, res) => {
-  const id = req.params.id  
+  const id = req.params.id;
   const sql = `
     SELECT * FROM requests
     WHERE requests.user_id = ?
   `;
 
   con.query(sql, [id], (err, result) => {
-    if (err) return res.json({ Status: false, Error: "Query Error "+ err  });
+    if (err) return res.json({ Status: false, Error: "Query Error " + err });
+
+    return res.json({ Status: true, Result: result });
+  });
+});
+
+router.get("/requests_by_category/:isEquipmentManager", (req, res) => {
+  const category = parseInt(req.params.isEquipmentManager, 10)
+    ? parseInt(req.params.isEquipmentManager, 10) // Convert to number if admin in general (temporarly)
+    : req.params.isEquipmentManager; 
+  // console.log(category);
+
+  let sql;
+  if (category === -1) {
+    sql = "SELECT * FROM requests WHERE status = 'by_category_manager'";
+  } else {
+    sql = "SELECT * FROM requests WHERE request_category = ? AND status = 'by_category_manager'";
+  }
+
+  con.query(sql, category === -1 ? [] : [category], (err, result) => {
+    // Only pass parameter when needed
+    if (err) return res.json({ Status: false, Error: "Query Error " + err });
+    // console.log(result);
+    return res.json({ Status: true, Result: result });
+  });
+});
+
+router.get("/request_by/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = `
+    SELECT requests.*, users.name as user_name
+    FROM requests
+    LEFT JOIN users ON requests.user_id = users.user_id
+    WHERE requests.id = ?
+  `;
+
+  con.query(sql, [id], (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error " + err });
 
     return res.json({ Status: true, Result: result });
   });
 });
 
 router.delete("/delete_request_by/:id", (req, res) => {
-  const id = req.params.id
+  const id = req.params.id;
 
   const sql = `delete from requests WHERE id = (?)`;
 
@@ -73,18 +111,17 @@ router.post("/insert_new_request", (req, res) => {
         VALUES (?, ?, ?, ? ,? , ? ,? , ?)
     `;
 
-    // console.log(req);
-    
+  // console.log(req);
 
-    const values = [
-      req.body.user_id,
-      req.body.user_department_name,
-      req.body.request_category,
-      req.body.status,
-      req.body.header,
-      req.body.body,
-      req.body.request_date,
-      req.body.note
+  const values = [
+    req.body.user_id,
+    req.body.user_department_name,
+    req.body.request_category,
+    req.body.status,
+    req.body.header,
+    req.body.body,
+    req.body.request_date,
+    req.body.note,
   ];
 
   // for(let pair of values.entries())
@@ -94,24 +131,59 @@ router.post("/insert_new_request", (req, res) => {
     if (err) return res.json({ Status: false, Error: err });
     return res.json({ Status: true });
   });
-
 });
 
-router.post("/add_department", (req, res) => {
-  const sql = "INSERT INTO department (`name`, `manager_name`, `manager_email`) VALUES (?)";
-  console.log(req.body);
-  const values = [
-    req.body.name,
-    req.body.manager_name,
-    req.body.manager_email
-  ]
+router.put("/update_request_status/:request_id", (req, res) => {
+  const { status } = req.body;
+  const id = req.params.request_id;
 
-  
+  const sql = `update requests set status = (?) WHERE id = (?)`;
+
+  con.query(sql, [status, id], (err, result) => {
+    if (err) return res.json({ Status: false, Error: err });
+    return res.json({ Status: true });
+  });
+});
+
+router.put("/send_feedback/:request_id", (req, res) => {
+  const { status, note } = req.body;
+  const id = req.params.request_id;
+
+  // console.log(status);
+
+  const sql = `update requests set status = (?), note = (?) WHERE id = (?)`;
+
+  con.query(sql, [status, note, id], (err, result) => {
+    if (err) return res.json({ Status: false, Error: err });
+    return res.json({ Status: true });
+  });
+});
+
+router.put("/update_request_note/:request_id", (req, res) => {
+  const { note } = req.body;
+  const id = req.params.request_id;
+
+  const sql = `update requests set note = (?) WHERE id = (?)`;
+
+  con.query(sql, [ note, id ], (err, result) => {
+    if (err) return res.json({ Status: false, Error: err });
+    return res.json({ Status: true });
+  });
+});
+
+
+router.post("/add_department", (req, res) => {
+  const sql =
+    "INSERT INTO department (`name`, `manager_name`, `manager_email`) VALUES (?)";
+  console.log(req.body);
+  const values = [req.body.name, req.body.manager_name, req.body.manager_email];
+
   con.query(sql, [values], (err, result) => {
     if (err) {
       console.log(err);
-      
-      return res.json({ Status: false, Error: "Query Error" })};
+
+      return res.json({ Status: false, Error: "Query Error" });
+    }
     return res.json({ Status: true });
   });
 });
@@ -125,10 +197,10 @@ router.get("/department", (req, res) => {
 });
 
 router.put("/update_department", (req, res) => {
-  const {id, name, manager_name, manager_email} = req.body;
+  const { id, name, manager_name, manager_email } = req.body;
 
   // console.log(id, name, manager_name, manager_email);
-  
+
   const sql = `update department set name = (?), manager_name = (?), manager_email = (?) WHERE id = (?)`;
 
   con.query(sql, [name, manager_name, manager_email, id], (err, result) => {
@@ -138,20 +210,17 @@ router.put("/update_department", (req, res) => {
 });
 
 router.post("/add_equipment_category", (req, res) => {
-  const sql = "INSERT INTO equipment_category (`category_name`, `manager_name`, `manager_email`) VALUES (?)";
+  const sql =
+    "INSERT INTO equipment_category (`category_name`, `manager_name`, `manager_email`) VALUES (?)";
   console.log(req.body);
-  const values = [
-    req.body.name,
-    req.body.manager_name,
-    req.body.manager_email
-  ]
+  const values = [req.body.name, req.body.manager_name, req.body.manager_email];
 
-  
   con.query(sql, [values], (err, result) => {
     if (err) {
       console.log(err);
-      
-      return res.json({ Status: false, Error: "Query Error" })};
+
+      return res.json({ Status: false, Error: "Query Error" });
+    }
     return res.json({ Status: true });
   });
 });
@@ -165,18 +234,21 @@ router.get("/equipment_category", (req, res) => {
 });
 
 router.put("/update_category", (req, res) => {
-  const {id, category_name, manager_name, manager_email} = req.body;
+  const { id, category_name, manager_name, manager_email } = req.body;
 
   // console.log("date " + date, "time " + time);
   // console.log("email " + email);
 
   const sql = `update equipment_category set category_name = (?), manager_name = (?), manager_email = (?) WHERE id = (?)`;
 
-  con.query(sql, [category_name, manager_name, manager_email, id], (err, result) => {
-    if (err) return res.json({ Status: false, Error: err });
-    return res.json({ Status: true });
-  });
-
+  con.query(
+    sql,
+    [category_name, manager_name, manager_email, id],
+    (err, result) => {
+      if (err) return res.json({ Status: false, Error: err });
+      return res.json({ Status: true });
+    }
+  );
 });
 
 router.put("/update_user_time_alarm/:email", (req, res) => {
@@ -195,15 +267,14 @@ router.put("/update_user_time_alarm/:email", (req, res) => {
   });
 });
 
-router.post("/add_user", upload.single('image'), (req, res) => {
-
-    const sql = `
+router.post("/add_user", upload.single("image"), (req, res) => {
+  const sql = `
     INSERT INTO users (user_id, name, password, email, phone,  image, department_id,
     start_date, status) 
     VALUES (?)
     `;
 
-    bcrypt.hash(req.body.password, 10, (err, hash) => {
+  bcrypt.hash(req.body.password, 10, (err, hash) => {
     if (err) return res.json({ Status: false, Error: "Hash Error" });
     const values = [
       req.body.user_id,
@@ -215,11 +286,12 @@ router.post("/add_user", upload.single('image'), (req, res) => {
       req.body.department_id,
       // req.body.rol,
       req.body.start_date,
-      req.body.status
+      req.body.status,
     ];
 
     con.query(sql, [values], (err, result) => {
-      if (err) return res.json({ Status: false, Error: "error insertion: "+err });
+      if (err)
+        return res.json({ Status: false, Error: "error insertion: " + err });
       return res.json({ Status: true });
     });
   });
@@ -234,7 +306,7 @@ router.get("/users", (req, res) => {
 });
 
 router.get("/users/:id", (req, res) => {
-  const id = req.params.id  
+  const id = req.params.id;
   const sql = `
     SELECT users.*, department.name as department_name
     FROM users
@@ -243,30 +315,31 @@ router.get("/users/:id", (req, res) => {
   `;
 
   con.query(sql, [id], (err, result) => {
-    if (err) return res.json({ Status: false, Error: "Query Error "+ err  });
+    if (err) return res.json({ Status: false, Error: "Query Error " + err });
 
     return res.json({ Status: true, Result: result });
   });
 });
 
 router.get("/equipment/employee/:id", (req, res) => {
-  const id = req.params.id
+  const id = req.params.id;
   // console.log(id);
-  
-  const sql = "SELECT * FROM equipment WHERE employee_id = (?) AND status != 'availble'";
+
+  const sql =
+    "SELECT * FROM equipment WHERE employee_id = (?) AND status != 'availble'";
   con.query(sql, [id], (err, result) => {
-    if (err) return res.json({ Status: false, Error: "Query Error "+ err  });
+    if (err) return res.json({ Status: false, Error: "Query Error " + err });
     return res.json({ Status: true, Result: result });
   });
 });
 
 router.get("/equipment_by_item/:id", (req, res) => {
-  const id = req.params.id
+  const id = req.params.id;
   // console.log(id);
-  
+
   const sql = "SELECT * FROM equipment WHERE item_id = (?)";
   con.query(sql, [id], (err, result) => {
-    if (err) return res.json({ Status: false, Error: "Query Error "+ err  });
+    if (err) return res.json({ Status: false, Error: "Query Error " + err });
     return res.json({ Status: true, Result: result });
   });
 });
@@ -282,39 +355,43 @@ router.get("/equipment_by_category/:isEquipmentManager", (req, res) => {
     sql = "SELECT * FROM equipment WHERE item_category = ?";
   }
 
-  con.query(sql, category === -1 ? [] : [category], (err, result) => { // Only pass parameter when needed
+  con.query(sql, category === -1 ? [] : [category], (err, result) => {
+    // Only pass parameter when needed
     if (err) return res.json({ Status: false, Error: "Query Error " + err });
     // console.log(result);
     return res.json({ Status: true, Result: result });
   });
 });
 
-router.get("/equipment_by_category_and_user/:isEquipmentManager", (req, res) => {
-  const category = parseInt(req.params.isEquipmentManager, 10); // Convert to number
-  // console.log(category);
+router.get("/equipment_by_category_and_user/:isEquipmentManager",
+  (req, res) => {
+    const category = parseInt(req.params.isEquipmentManager, 10); // Convert to number
+    // console.log(category);
 
-  let sql;
-  if (category === -1) {
-    sql = `SELECT equipment.*, users.name, users.email, users.phone 
+    let sql;
+    if (category === -1) {
+      sql = `SELECT equipment.*, users.name, users.email, users.phone 
             FROM equipment
             JOIN users
             ON equipment.employee_id = users.user_id
-            ` ;
-  } else {
-    sql = `SELECT equipment.*, users.name, users.email, users.phone 
+            `;
+    } else {
+      sql = `SELECT equipment.*, users.name, users.email, users.phone 
             FROM equipment
             JOIN users
             ON equipment.employee_id = users.user_id
             WHERE equipment.item_category = (?)
             `;
-  }
+    }
 
-  con.query(sql, category === -1 ? [] : [category], (err, result) => { // Only pass parameter when needed
-    if (err) return res.json({ Status: false, Error: "Query Error " + err });
-    // console.log(result);
-    return res.json({ Status: true, Result: result });
-  });
-});
+    con.query(sql, category === -1 ? [] : [category], (err, result) => {
+      // Only pass parameter when needed
+      if (err) return res.json({ Status: false, Error: "Query Error " + err });
+      // console.log(result);
+      return res.json({ Status: true, Result: result });
+    });
+  }
+);
 
 router.post("/insert_new_item", (req, res) => {
   const sql = `
@@ -322,17 +399,16 @@ router.post("/insert_new_item", (req, res) => {
         VALUES (?, ?, ?, ? ,? , ? ,?)
     `;
 
-    // console.log(req);
-    
+  // console.log(req);
 
-    const values = [
-      req.body.item_category,
-      req.body.item_name,
-      req.body.item_description,
-      req.body.item_id,
-      req.body.employee_id,
-      req.body.start_date,
-      req.body.status
+  const values = [
+    req.body.item_category,
+    req.body.item_name,
+    req.body.item_description,
+    req.body.item_id,
+    req.body.employee_id,
+    req.body.start_date,
+    req.body.status,
   ];
 
   // for(let pair of values.entries())
@@ -342,7 +418,6 @@ router.post("/insert_new_item", (req, res) => {
     if (err) return res.json({ Status: false, Error: err });
     return res.json({ Status: true });
   });
-
 });
 
 router.post("/upload_item_file", upload.single("file"), (req, res) => {
@@ -354,16 +429,18 @@ router.post("/upload_item_file", upload.single("file"), (req, res) => {
   // Save the file path and associated item_id to the database
   const file_name = req.file.filename;
   // console.log(file_name);
-  
+
   const query = "UPDATE equipment SET file_name = ? WHERE item_name = ?";
   con.query(query, [file_name, item_name], (err, result) => {
     if (err) return res.status(500).json({ Status: false, Error: err.message });
-    res.status(200).json({ Status: true, Message: "File uploaded successfully." });
+    res
+      .status(200)
+      .json({ Status: true, Message: "File uploaded successfully." });
   });
 });
 
 router.delete("/delete_equipment_by_employee/:id", (req, res) => {
-  const id = req.params.id
+  const id = req.params.id;
 
   const sql = `delete from equipment WHERE employee_id = (?)`;
 
@@ -374,7 +451,7 @@ router.delete("/delete_equipment_by_employee/:id", (req, res) => {
 });
 
 router.delete("/delete_item/:id", (req, res) => {
-  const id = req.params.id
+  const id = req.params.id;
 
   const sql = `delete from equipment WHERE item_id = (?)`;
 
@@ -426,7 +503,16 @@ router.put("/update_all_items_status/:id", (req, res) => {
 
 router.put("/update_item/:id", (req, res) => {
   const id = req.params.id;
-  const { item_category, item_name, item_description, item_id, employee_id, start_date, leave_date, status } = req.body;
+  const {
+    item_category,
+    item_name,
+    item_description,
+    item_id,
+    employee_id,
+    start_date,
+    leave_date,
+    status,
+  } = req.body;
 
   const sql = `
     UPDATE equipment 
@@ -452,7 +538,7 @@ router.put("/update_item/:id", (req, res) => {
       start_date || null,
       leave_date || null,
       status || "availble",
-      id
+      id,
     ],
     (err, result) => {
       if (err) return res.json({ Status: false, Error: err.message });
@@ -476,10 +562,9 @@ router.put("/update_user_leaving_date/:id", (req, res) => {
   });
 });
 
-router.put("/update_user/:id", upload.single('image'), (req, res) => {
+router.put("/update_user/:id", upload.single("image"), (req, res) => {
+  const id = req.params.id;
 
-  const id = req.params.id
-  
   const sql = `
         UPDATE users
         set user_id = ?, name = ?, password = ?, email = ?, phone = ?, image = ?, department_id = ?,
@@ -487,30 +572,31 @@ router.put("/update_user/:id", upload.single('image'), (req, res) => {
         WHERE user_id = (?)
     `;
 
-    bcrypt.hash(req.body.password, 10, (err, hash) => {
-      if (err) return res.json({ Status: false, Error: "Hash Error" });
-      const values = [
-        req.body.user_id,
-        req.body.name,
-        hash,
-        req.body.email,
-        req.body.phone,
-        req.file ? req.file.filename : req.body.image,
-        req.body.department_id,
-        // req.body.rol,
-        req.body.start_date,
-        req.body.leave_date,
-      ];
-  
-      con.query(sql, [...values, id], (err, result) => {
-        if (err) return res.json({ Status: false, Error: "error update: "+err });
-        return res.json({ Status: true });
-      });
+  bcrypt.hash(req.body.password, 10, (err, hash) => {
+    if (err) return res.json({ Status: false, Error: "Hash Error" });
+    const values = [
+      req.body.user_id,
+      req.body.name,
+      hash,
+      req.body.email,
+      req.body.phone,
+      req.file ? req.file.filename : req.body.image,
+      req.body.department_id,
+      // req.body.rol,
+      req.body.start_date,
+      req.body.leave_date,
+    ];
+
+    con.query(sql, [...values, id], (err, result) => {
+      if (err)
+        return res.json({ Status: false, Error: "error update: " + err });
+      return res.json({ Status: true });
     });
+  });
 });
 
 router.delete("/delete_user/:id", (req, res) => {
-  const id = req.params.id
+  const id = req.params.id;
 
   const sql = `delete from users WHERE user_id = (?)`;
 
@@ -521,7 +607,8 @@ router.delete("/delete_user/:id", (req, res) => {
 });
 
 router.get("/count_tasks_count", (req, res) => {
-  const sql = "SELECT COUNT(id) as tasks FROM equipment WHERE status = 'leaving' ";
+  const sql =
+    "SELECT COUNT(id) as tasks FROM equipment WHERE status = 'leaving' ";
   con.query(sql, (err, result) => {
     if (err) return res.json({ Status: false, Error: "Query Error" });
     return res.json({ Status: true, Tasks: result[0].tasks });
@@ -537,8 +624,8 @@ router.get("/count_leaving_users", (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  res.clearCookie('token');
-  return res.json({ Status: true});
+  res.clearCookie("token");
+  return res.json({ Status: true });
 });
 
 export { router as routes };

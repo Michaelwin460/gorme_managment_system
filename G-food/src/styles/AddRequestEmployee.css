@@ -1,6 +1,12 @@
 .add-item-container {
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
+    font-family: 'Montserrat';
     padding: 20px;
+  }
+
+  .add-item-header{
+    font-family: 'Montserrat';
+    color:#0033D9
   }
   
   .add-item-form {
@@ -9,7 +15,9 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Montserrat';
   }
+
   
   .add-item-form .form-label {
     font-weight: bold;
@@ -21,8 +29,8 @@
     border-radius: 4px;
   }
   
-  .add-item-form button {
-    background-color: #0033D9;
+  .add-item-form .btn {
+    background-color: #fdcc4d;
     color: white;
     padding: 10px 20px;
     border-radius: 8px;

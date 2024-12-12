@@ -1,111 +1,175 @@
 .employee-details-container {
-    font-family: "Roboto", sans-serif;
-    padding: 20px;
-  }
+  /* font-family: "Roboto", sans-serif; */
+  font-family: 'Montserrat';
+  padding: 20px;
+}
+
+.employee-header {
+  font-family: 'Montserrat';
+  font-size: 24px;
+  font-weight: bold;
+  color: #0033d9;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.employee-subheader {
+  font-family: 'Montserrat';
+  font-size: 18px;
+  text-align: center;
+  color: #0033d9;
+  margin-bottom: 30px; /* Increased gap between sections */
+}
+
+.employee-navbar {
+  font-family: 'Montserrat';
+  display: flex;
+  justify-content: center;
+  border: 1px solid #0033d9;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  width: 70%;
+  margin: 0 auto 30px; /* Increased gap after navbar */
+}
+
+.navbar-section {
+  flex: 1;
+  padding: 10px 0;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  color: #0033d9; /* Blue text for the navbar */
+}
+
+.navbar-section.selected {
+  background-color: #0033d9;
+  color: #fff; /* White text for selected section */
+}
+
+.employee-content {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.employee-table {
+  width: 100%;
+  margin-bottom: 30px; /* Increased gap between tables */
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.employee-table th {
+  background-color: #d3d3e0; /* Softer light gray-blue for headers */
+  color: #333;
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  font-weight: bold;
+  font-family: 'Montserrat';
+}
+
+.employee-table td {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  word-break: break-word; /* Prevents overflow for long text */
+  color: #333;
+  font-family: 'Montserrat';
+}
+
+.employee-table td input[type="text"] {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.employee-table td textarea {
+  width: 90%;
+  min-height: 50px;
+  resize: vertical; /* Allows resizing only vertically */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Updated gap between buttons */
+  margin-top: 30px;
+}
+
+.action-buttons .btn-primary {
+  background-color: #fdcc4d;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin: 0 10px; /* Proper margin for spacing */
   
-  .employee-header {
-    font-size: 24px;
-    font-weight: bold;
-    color: #0033d9;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  .employee-subheader {
-    font-size: 18px;
-    text-align: center;
-    color: #5142f0;
-    margin-bottom: 30px; /* Increased gap between sections */
-  }
-  
-  .employee-navbar {
-    display: flex;
-    justify-content: center;
-    border: 1px solid #0033d9;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    width: 70%;
-    margin: 0 auto 30px; /* Increased gap after navbar */
-  }
-  
-  .navbar-section {
-    flex: 1;
-    padding: 10px 0;
-    text-align: center;
-    font-weight: bold;
-    font-family: "Roboto", sans-serif; /* Ensure consistent font */
-    cursor: pointer;
-    color: #0033d9; /* Blue text for the navbar */
-  }
-  
-  .navbar-section.selected {
-    background-color: #0033d9;
-    color: #fff; /* White text for selected section */
-  }
-  
-  .employee-content {
-    width: 70%;
-    margin: 0 auto;
-  }
-  
-  .employee-table {
-    width: 100%;
-    margin-bottom: 30px; /* Increased gap between tables */
-    border-collapse: collapse;
-    font-size: 14px;
-  }
-  
-  .employee-table th {
-    background-color: #d3d3e0; /* Softer light gray-blue for headers */
-    color: #333;
-    padding: 10px;
-    text-align: center; /* Center-align text in table headers */
-    border-bottom: 1px solid #ccc;
-    font-family: "Roboto", sans-serif; /* Header font */
-    font-weight: bold;
-  }
-  
-  .employee-table td {
-    padding: 10px;
-    text-align: center; /* Center-align text in table data */
-    border-bottom: 1px solid #ccc;
-    font-family: "Arial", sans-serif; /* Cool but regular font for data */
-    color: #333; /* Neutral text color for readability */
-  }
-  
-  .action-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 30px; /* Increased gap between buttons */
-    margin-top: 30px;
-  }
-  
-  .action-buttons .btn-primary {
-    background-color: #0033d9;
-    border: none;
-    color: #fff;
-    transition: background-color 0.3s ease;
-  }
-  
-  .action-buttons .btn-primary:hover {
-    background-color: #7a42f0; /* Gentle purple hover effect */
-  }
-  
-  .action-buttons .btn-secondary {
-    background-color: #6c757d;
-    border: none;
-    color: #fff;
-  }
-  
-  .action-buttons .btn-secondary:hover {
-    background-color: #5a6268;
-  }
-  
-  /* Added hall background with subtle color */
-  .hall-component {
-    background-color: #f9f9f9; /* Soft grayish tone for a professional, neutral look */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds depth with shadows */
-  }
-  
+}
+
+.action-buttons .btn-primary:hover {
+  background-color: #7a42f0; /* Gentle purple hover effect */
+}
+
+.action-buttons .btn-secondary {
+  background-color: #6c757d;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin: 0 10px;
+}
+
+.action-buttons .btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.action-buttons .btn-danger {
+  background-color: #f44336;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin: 0 10px;
+}
+
+.action-buttons .btn-danger:hover {
+  background-color: #d32f2f;
+}
+
+.hall-component {
+  font-family: 'Montserrat';
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the edit note field to match the hall component */
+.edit-note-field {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: "Roboto", sans-serif;
+  width: 100%;
+  resize: vertical; /* Allow vertical resizing */
+  min-height: 50px; /* Increased height for better visibility */
+}

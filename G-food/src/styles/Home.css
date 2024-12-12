@@ -2,32 +2,40 @@
 .home-container {
     background-color: #f7f9fc;
     padding: 20px;
-    font-family: Arial, sans-serif;
+    font-family: 'Montserrat';
   }
   
   /* Summary card styling */
   .summary-card {
     padding: 1.5rem 2rem;
     background-color: #fff;
-    border: 1px solid #ddd;
+    border: 1px solid blue;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     width: 30%;
+    /* height: 100px; */
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   }
   
   .summary-card h4 {
+    font-family: 'Montserrat';
     text-align: center;
-    color: white;
+    color: blue;
     font-weight: 600;
     margin-bottom: 0.8rem;
+    
   }
   
   .summary-card .summary-total {
+    font-family: 'Montserrat';
     display: flex;
     justify-content: space-between;
     font-size: 1rem;
-    color: white;
+    color: black;
+  }
+
+  .summary-total h5{
+    font-family: 'Montserrat';
   }
   
   .summary-card:hover {
@@ -37,11 +45,15 @@
   
   /* Table container */
   .table-container {
+    font-family: 'Montserrat';
+
     width: 85%;
     margin: 2rem auto;
   }
   
   .table-header {
+    font-family: 'Montserrat';
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -52,6 +64,8 @@
   }
   
   .table-header h3 {
+    font-family: 'Montserrat';
+
     margin: 0;
     font-weight: 600;
   }
@@ -79,6 +93,8 @@
   }
   
   .table thead {
+    font-family: 'Montserrat';
+
     background-color: #f1f3f5;
   }
   
@@ -86,19 +102,29 @@
     color: #0033D9;
     font-weight: 600;
     border-bottom: 2px solid #ddd;
+    font-family: 'Montserrat';
   }
   
   .table tbody tr {
     transition: background-color 0.3s ease-in-out;
+    font-family: 'Montserrat';
   }
   
   .table tbody tr:hover {
     background-color: #f8f9fa;
   }
+
+  .table tbody td {
+    /* transition: background-color 0.3s ease-in-out; */
+    font-family: 'Montserrat';
+
+  }
   
   /* Buttons */
   .btn-info {
-    background-color: #5142F0;
+    font-family: 'Montserrat';
+
+    background-color: #fdcc4d;
     border: none;
     color: #ffffff;
     border-radius: 4px;

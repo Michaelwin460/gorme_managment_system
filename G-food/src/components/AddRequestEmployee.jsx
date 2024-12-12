@@ -72,7 +72,7 @@ const AddRequestEmployee = () => {
   return (
     <div className="add-item-container d-flex justify-content-center align-items-center mt-3">
       <div className="add-item-form p-3 rounded w-50">
-        <h2 className="text-center">Send Request to your boss:</h2>
+        <h2 className="text-center add-item-header" >Fill the request form:</h2>
         <form className="row g-3" onSubmit={handleSubmit}>
           {/* Category Selection */}
           <div className="col-12">

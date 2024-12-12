@@ -1,0 +1,75 @@
+.requests-container {
+  font-family: 'Montserrat';
+  padding: 20px;
+}
+
+.requests-header {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Montserrat';
+  margin-bottom: 15px;
+  color: #0033d9;
+  text-align: center;
+}
+
+.requests-subheader {
+  font-family: 'Montserrat';
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #5142F0;
+  text-align: center;
+}
+
+.requests-search-bar {
+  font-family: 'Montserrat';
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.requests-search-bar i {
+  font-size: 18px;
+  color: #0033d9;
+}
+
+.requests-search-input {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1;
+}
+
+.requests-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.requests-no-data {
+  text-align: center;
+  color: gray;
+  padding: 20px 0;
+}
+
+.requests-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.requests-actions .btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  width: 35%;
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.requests-actions .btn-primary {
+  background-color: #5142F0;
+  color: white;
+}
+
+.requests-actions .btn-primary:hover {
+  background-color: #C900FE;
+}

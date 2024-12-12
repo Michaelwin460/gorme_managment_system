@@ -239,7 +239,7 @@ const ManageItemInStock = () => {
               <>
                 <button
                   type="button"
-                  className="btn btn-primary mx-2"
+                  className="btn btn-primary my-bot mx-2"
                   onClick={handleSubmit}
                 >
                   Submit

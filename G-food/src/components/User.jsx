@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/styles.css";
+import "bootstrap-icons/font/bootstrap-icons.css"; // For icons
+
 
 const User = () => {
   const navigate = useNavigate();
@@ -32,8 +34,10 @@ const User = () => {
         className="search-add-container p-3 d-flex justify-content-between align-items-center"
         style={{ width: "100%", maxWidth: "800px", margin: "0 auto" }}
       >
-        <Link to="/admin/add_user" className="btn primary-btn">
-          Add User
+        <Link to="/admin/add_user" className="btn">
+          
+          <i className="bi bi-plus"></i> Add User
+
         </Link>
         <input
           type="text"
@@ -70,7 +74,7 @@ const User = () => {
                   <td>
                     <Link
                       to={`/admin/user_details/${e.user_id}`}
-                      className="btn info-btn btn-sm"
+                      className="btn btn-sm"
                     >
                       View Details
                     </Link>

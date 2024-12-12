@@ -1,9 +1,10 @@
 .stock-container {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Montserrat';
     padding: 20px;
   }
   
   .stock-header {
+    font-family: 'Montserrat';
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 15px;
@@ -87,7 +88,7 @@
   }
 
   .add-item-container .btn-primary {
-    background-color: #5142F0; /* Subtle background for the button */
+    background-color: #d9b800;
     color: white;
 }
 

@@ -3,15 +3,15 @@
 .sidebar-custom {
   width: 250px; /* Fixed width for the sidebar */
   background-color: #fff; /* White background */
-  border-right: 2px solid #C900FE; /* Gentle purple border */
-  font-family: 'Roboto', sans-serif;
+  border-right: 2px solid rgba(196, 195, 195, 0.953); /* Gentle purple border */
+  font-family: 'Montserrat';
   overflow-y: auto; /* Sidebar scrolls independently */
   position: sticky;
   top: 0;
 }
   
   .dashboard-logo {
-    width: 120px;
+    width: 300px;
     height: auto;
   }
   
@@ -38,10 +38,13 @@
     z-index: 1;
     background-color: #F9F9FF; /* Gentle purple */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    height: 100px;
+    /* font-family: 'Montserrat'; */
   }
   
-  h4 {
-    font-family: 'Roboto', sans-serif;
-    color: #5142F0; /* Purple text */
+  .top-bar h4 {
+    font-family: 'Montserrat';
+    margin-top: 30px;
+    color: #606094; /* Purple text */
   }
   

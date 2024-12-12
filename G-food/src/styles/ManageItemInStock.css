@@ -13,12 +13,16 @@
     font-weight: bold;
     color: #0033d9; /* Primary color */
     margin-bottom: 0.5rem;
+    font-family: 'Montserrat';
+
   }
   
   .header-description {
     font-size: 1rem;
     color: #555;
     margin: 0;
+  font-family: 'Montserrat';
+
   }
   
   .add-item-container {
@@ -54,8 +58,13 @@
   }
   
   .add-item-form .btn-primary {
-    background-color: #0033d9;
+    background-color: #d9b800;
     border: none;
+  }
+
+  .my-bot{
+    background-color: #d9b800;
+
   }
   
   .add-item-form .btn-primary:hover {

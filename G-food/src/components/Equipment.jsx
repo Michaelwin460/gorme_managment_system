@@ -149,9 +149,10 @@ const Stock = () => {
 
       {/* Add Item Button */}
       <div className="add-item-container">
-        <button className="btn btn-primary" onClick={() => navigate('/admin/add_item_to_stock')}>
-          Add Item To Stock
-        </button>
+      <button className="btn btn-primary" onClick={() => navigate('/admin/add_item_to_stock')}>
+  <i className="bi bi-plus"></i> Add Item To Stock
+</button>
+
       </div>
     </div>
   );

@@ -1,0 +1,160 @@
+/* General Styles */
+.request_admin-container {
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: "Roboto", sans-serif;
+  }
+  
+  .request_admin-header {
+    margin-bottom: 20px;
+  }
+  
+  .request_admin-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #0033d9; /* System theme color */
+  }
+  
+  .request_admin-description {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .request_admin-form {
+    background-color: #f7f7f7;
+    border: 1px solid #d1d1d1;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .request_admin-field {
+    margin-bottom: 20px;
+  }
+  
+  .request_admin-label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  .request_admin-textbox {
+    width: 100%;
+    height: 42px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+    box-sizing: border-box;
+  }
+  
+  .request_admin-textbox-note {
+    height: 60px;
+    width: calc(100% - 20px); /* Wider note box */
+  }
+  
+  /* Navbar */
+  .request_admin-navbar {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 15px;
+    background-color: #0033d9; /* Solid system blue */
+    border-radius: 8px;
+    margin-top: 30px;
+    width: 100%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    gap: 10px; /* Even spacing between buttons */
+  }
+  
+  /* Navbar Buttons */
+  .request_admin-navbar .btn {
+    flex: 1;
+    max-width: 160px;
+    margin: 0 5px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    color: white;
+    text-align: center;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+  
+  .navbar-custom {
+    display: flex;
+    background-color: white;
+    border: 2px solid #0033d9;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    color: blue;
+  }
+  
+  .navbar-button {
+    flex: 1;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    background-color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .navbar-button:hover {
+    background-color: #0033d9;
+    color: white;
+  }
+  
+  .navbar-button.selected {
+    background-color: #0033d9;
+    color: white;
+  }
+  
+  .navbar-button:not(.selected):active {
+    background-color: #5142f0;
+    color: white;
+  }
+  
+  
+  .request_admin-navbar .btn:last-child {
+    margin-right: 0;
+  }
+  
+  .request_admin-navbar .btn:first-child {
+    margin-left: 0;
+  }
+  
+  /* Consistent Margins */
+  .request_admin-container, .request_admin-navbar {
+    box-sizing: border-box;
+  }
+  
+  /* Symmetry Fixes */
+  .request_admin-navbar .btn {
+    height: 45px;
+    text-align: center;
+  }
+  
+  .request_admin-form {
+    width: calc(100% - 20px);
+  }
+  
+  .request_admin-navbar {
+    padding: 10px 15px;
+  }
+  
+  /* Box Adjustments */
+  .request_admin-textbox {
+    height: 42px;
+  }
+  
+  .request_admin-textbox-note {
+    height: 60px;
+    margin: 0;
+  }
+  
