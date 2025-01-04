@@ -27,7 +27,7 @@ const Stock = () => {
   const fetchEquipment = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/auth/equipment_by_category/${isEquipmentManager}`
+        `http://localhost:3000/auth/equipment_by_category/${user.item_category_managment}`
       );
       if (response.data.Status) {
         setEquipment(response.data.Result);
@@ -126,14 +126,14 @@ const Stock = () => {
             </thead>
             <tbody>
               {filteredEquipment.map((item) => (
-                <tr key={item.item_id}>
+                <tr key={item.id}>
                   <td>{item.item_name}</td>
                   <td>{item.item_description}</td>
                   <td>{item.status}</td>
                   <td>
                     <button
                       className="btn btn-info btn-sm"
-                      onClick={() => handleInspectItem(item.item_id)}
+                      onClick={() => handleInspectItem(item.id)}
                     >
                       Inspect
                     </button>

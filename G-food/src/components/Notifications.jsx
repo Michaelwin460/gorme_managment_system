@@ -27,13 +27,13 @@ const Notifications = () => {
       {/* Main Content Wrapper */}
       <div className="content-wrapper" style={{ maxWidth: '600px', width: '100%' }}>
         {/* Header Section */}
-        <header className="navbar bg-light text-white mb-4 rounded shadow-sm mt-3">
+        <header className="header navbar bg-light mb-4 rounded shadow-sm mt-3">
           <h1 className="mx-auto py-2">Email Notifications Settings</h1>
         </header>
 
         {/* Content Section */}
         <div className="content-section p-4 bg-light rounded shadow">
-          <h4 className="notif-header mb-4 text-primary">Set Tasks Reminder:</h4>
+          <h4 className="notif-header mb-4">Set Tasks Reminder:</h4>
 
           {/* Selection Options */}
           <div className="row g-4">

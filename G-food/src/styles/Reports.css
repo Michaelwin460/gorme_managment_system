@@ -1,9 +1,9 @@
 /* General container styling */
 .report-container {
-  max-width: 800px; /* Set a maximum width for better alignment */
-  margin: 0 auto; /* Center the report container */
+  max-width: 800px; 
+  margin: 0 auto; 
   padding: 20px;
-  font-family: 'Roboto', 'Montserrat', sans-serif;
+  font-family: 'Montserrat';
 }
 
 /* Navbar styles */
@@ -13,7 +13,8 @@
   margin-bottom: 10px;
   border-bottom: 2px solid #ccc;
   padding-bottom: 10px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat';
+  color: #0033d9;
 }
 
 /* Section styling */
@@ -36,14 +37,16 @@
 
 .section h4 {
   font-size: 18px;
-  color: #007bff;
+  color: #0033d9;
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Montserrat';
   font-weight: 500;
 }
 
+
 .section p {
   font-size: 14px;
+  font-family: 'Montserrat';
   color: #666;
   margin-bottom: 8px;
 }
@@ -54,6 +57,7 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
+  font-family: 'Montserrat';
 }
 
 .small-input {
@@ -61,18 +65,18 @@
   width: 100px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Montserrat';
 }
 
 .btn-download {
-  background-color: #007bff;
+  background-color: #d9b800;
   color: #fff;
   padding: 5px 10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   margin-left: 10px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat';
   font-weight: 500;
 }
 
@@ -85,7 +89,7 @@
   color: #333;
   font-size: 14px;
   margin-top: 10px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Montserrat';
 }
 
 /* Scrollable content */
@@ -99,7 +103,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Montserrat';
 }
 
 .table th, .table td {
@@ -129,7 +133,7 @@
   border-radius: 3px;
   cursor: pointer;
   transition: background-color 0.3s;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Montserrat';
 }
 
 .toggle-button:hover {

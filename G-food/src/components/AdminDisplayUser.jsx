@@ -120,18 +120,19 @@ const AdminDisplayUser = () => {
 
   const handleUpdateStatusItem = (itemId) => {
     const item = equipment.find((item) => item.item_id === itemId);
-    const enableItemUpdate = item && item.status !== "availble";
+    const enableItemUpdate = item && item.status !== "available";
     const currentDate = new Date().toISOString().split("T")[0];
     if(enableItemUpdate)
     {
       // Confirm before deleting an equipment item
       if (window.confirm("Are you sure you want to update this item?")) {
         axios
-          .put(`http://localhost:3000/auth/update_item_status/${itemId}`, { update_status: "availble", leave_date: currentDate })
+          .put(`http://localhost:3000/auth/update_item_status/${itemId}`,
+               { update_status: "available", leave_date: currentDate })
           .then((res) => {
             if (res.data.Status) {
               const updatedEquipment = equipment.map((item) =>
-                item.item_id === itemId ? { ...item, status: "availble", leave_date: currentDate} : item
+                item.item_id === itemId ? { ...item, status: "available", leave_date: currentDate} : item
               );
               setEquipment(updatedEquipment);            
             } else alert(res.data.Error);
@@ -192,173 +193,6 @@ const AdminDisplayUser = () => {
     doc.save(`example_file_request.pdf`);
   };
 
-  // return (
-  //   <div className="user-details-container p-2">
-  //     {/* Employee Details Section */}
-  //     <div className="user-details p-4 mb-2 bg-light border rounded">
-  //       <h2 className="text-center mb-3 ">User Details</h2>
-  //       <div className="text-center mb-4">
-  //       <button
-  //         className="btn btn-outline-primary btn-lg"
-  //         onClick={() => setShowDetails(!showDetails)}
-  //       >
-  //         {showDetails ? "Hide Details" : "Inspect Your Details"}
-  //       </button>
-  //       </div>
-  //       {showDetails && (        
-  //       <table className="table border">
-  //         <tbody>
-  //           <tr>
-  //             <td className="text-center mb-3 "><strong>User ID:</strong></td>
-  //             <td>{user.user_id}</td>
-  //             <td className="text-center mb-3 "><strong>Name:</strong></td>
-  //             <td>{user.name}</td>
-  //           </tr>
-  //           <tr>
-  //             <td className="text-center mb-3 "><strong>Phone:</strong></td>
-  //             <td>{user.phone}</td>
-  //             <td className="text-center mb-3 "><strong>Email:</strong></td>
-  //             <td>{user.email}</td>
-  //           </tr>
-  //           <tr>
-  //             <td className="text-center mb-3 "><strong>Department:</strong></td>
-  //             <td>{user.department_name}</td>
-  //             <td className="text-center mb-3 "><strong>Status:</strong></td>
-  //             <td>{status}</td>
-  //           </tr>
-  //           <tr>
-  //             <td className="text-center mb-3 "><strong>Start Date:</strong></td>
-  //             <td>{new Date().toISOString().split("T")[0]}</td>
-  //             {status !== "active" && (
-  //             <>
-  //               <td className="text-center mb-3 "><strong>Leaving Date:</strong></td>
-  //               <td>
-  //                 {status === "leaving" ? (
-  //                   <input
-  //                     type="date"
-  //                     value={leavingDate}
-  //                     onChange={(e) => handleUpdateLeavingDate(e.target.value)}
-  //                   />
-  //                 ) : (
-  //                   user.leaving_date
-  //                 )}
-  //               </td>
-  //             </>
-  //           )}
-
-  //           </tr>
-  //         </tbody>
-  //       </table>
-  //     )}
-  //     </div>
-
-
-
-
-  //     {/* Equipment List Section */}
-  //     <div className="equipment-list p-4 mb-2 bg-light border rounded">
-  //       <h4 className="text-center mb-3">Equipment Assigned</h4>
-  //       <table className="table table-striped">
-  //         <thead className="thead-dark">
-  //           <tr >
-  //             <th>Name</th>
-  //             <th>Description</th>
-  //             <th>Status</th>
-  //             <th>Start Date</th>
-  //             <th>Actions</th>
-  //           </tr>
-  //         </thead>
-  //         <tbody>
-  //           {equipment.map((item) => (
-  //             <tr key={item.item_id}>
-  //               <td>{item.item_name}</td>
-  //               <td>{item.item_description}</td>
-  //               <td>{item.status}</td>
-  //               <td>{new Date().toISOString().split("T")[0]}</td>
-  //               <td>
-                  // <button
-                  //   className="btn btn-danger btn-sm m-2"
-                  //   onClick={() => handleDeleteItem(item.item_id)}
-                  //   disabled={item.status === "active"}
-                  // >
-                  //   Delete
-                  // </button>
-                  // <button
-                  //   className="btn btn-danger btn-sm m-2"
-                  //   onClick={() => handleUpdateStatusItem(item.item_id)}
-                  // >
-                  //   Return Item
-                  // </button>
-                  // <label className="btn btn-primary btn-sm m-2">
-                  //   Add File
-                  //   <input
-                  //     type="file"
-                  //     accept=".pdf"
-                  //     onChange={(event) => handleFileUpload(event, item)}
-                  //     style={{ display: "none" }} 
-                  //   />
-                  // </label>
-                  // <a
-                  //   href={`http://localhost:3000/images/${item.file_name}`}
-                  //   target="_blank"
-                  //   rel="noopener noreferrer"
-                  //   className="btn btn-primary btn-sm m-2"
-                  // >
-                  //   View File
-                  // </a>
-  //               </td>
-
-  //             </tr>
-  //           ))}
-  //         </tbody>
-  //       </table>
-  //     </div>
-
-  //     {/* Control Panel Section */}
-  //     <div className="control-panel d-flex justify-content-between p-4 bg-light border rounded">
-
-
-  //       <button
-  //         className="btn btn-info me-2"
-  //         onClick={() => generateItemFile()}
-  //       >
-  //         Download Item File
-  //       </button>
-
-  //       <button
-  //         className="btn btn-success me-2"
-  //         onClick={() => navigate(`/admin/add_item/user/${id}`)}
-  //       >
-  //         Add Item
-  //       </button>
-
-  //       <button
-  //         className="btn btn-danger me-2"
-  //         onClick={handleDeleteUser}
-  //         disabled={!isDeleteUserEnabled}
-  //         // equipment.some((item) => item.status !== "returned")
-  //       >
-  //         Delete User
-  //       </button>
-
-  //       <button
-  //         className="btn btn-primary me-2"
-  //         onClick={() => navigate(`/admin/edit_user/${id}`)}
-  //       >
-  //         Edit Details
-  //       </button>
-
-  //       <button
-  //         className="btn btn-warning"
-  //         onClick={handleLeaveProcess}
-  //         disabled={status === "leaving"}
-  //       >
-  //         Start Leave Process
-  //       </button>
-  //     </div>
-  //   </div>
-  // );
-
   return (
     <div className="user-details-container p-4 mt-4">
       {/* Header Section */}
@@ -368,12 +202,12 @@ const AdminDisplayUser = () => {
   
       {/* User Info Header */}
       <div className="user-info-header">
-        {/* <h5>Name: {user.name}</h5> */}
-        <h5>Name: Yael Mashan</h5>
-        {/* <h5>Department: {user.department_name}</h5> */}
-        <h5>Department: Human Resources</h5>
-        <h5>ID: 1654356</h5>
-        {/* <h5>ID: {user.user_id}</h5> */}
+        <h5>Name: {user.name}</h5>
+        {/* <h5>Name: Yael Mashan</h5> */}
+        <h5>Department: {user.department_name}</h5>
+        {/* <h5>Department: Human Resources</h5> */}
+        {/* <h5>ID: 1654356</h5> */}
+        <h5>ID: {user.user_id}</h5>
       </div>
   
       {/* Navbar Section */}
@@ -468,7 +302,8 @@ const AdminDisplayUser = () => {
           </thead>
           <tbody>
             {equipment.map((item) => (
-              <tr key={item.item_id}>
+              item.status != 'available' &&
+              <tr key={item.id}>
                 <td>{item.item_name}</td>
                 <td>{item.item_description}</td>
                 <td>{item.status}</td>

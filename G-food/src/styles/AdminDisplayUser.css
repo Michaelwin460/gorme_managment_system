@@ -31,7 +31,7 @@
   font-family: 'Montserrat';
   font-size: 28px;
   font-weight: 700;
-  color: #0033D9; /* Bold primary color for emphasis */
+  color: #0033D9; 
   margin: 0;
   letter-spacing: 1px;
 }
@@ -41,7 +41,7 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #5142F0; /* Subtle yet vibrant background */
+  background-color: #5142F0; 
   padding: 1.2rem;
   border-radius: 12px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
@@ -57,7 +57,7 @@
   font-weight: bold;
   font-family: 'Montserrat';
   margin-bottom: 2rem;
-  color: #0033D9; /* Strong accent color for titles */
+  color: #0033D9; 
   text-transform: uppercase;
   letter-spacing: 1.2px;
 }
@@ -81,7 +81,7 @@
 }
 
 .primary-btn {
-  background-color: #0033D9; /* Vibrant blue */
+  background-color: #0033D9;
   color: white;
 }
 
@@ -100,7 +100,7 @@
 }
 
 .gray-btn {
-  background-color: #9fa8a9; /* Bright magenta for warnings */
+  background-color: #9fa8a9; 
   color: white;
   font-family: 'Montserrat';
   font-size: 16px;
@@ -114,7 +114,7 @@
 }
 
 .success-btn {
-  background-color: #28a745; /* Retained green for success */
+  background-color: #28a745; 
   color: white;
 }
 

@@ -59,7 +59,7 @@ const Report = () => {
     dateRange
   );
 
-  const filterDoneItemsByDateRange = (items, range) => {
+  const filterAvailableItemsByDateRange = (items, range) => {
     const now = new Date();
     const ranges = [
       new Date(), // today
@@ -67,13 +67,13 @@ const Report = () => {
       new Date(now.setMonth(now.getMonth() - 1)), // 1 month earlier
       new Date(now.setMonth(now.getMonth() - 3)) // 3 month earlier
     ];
-    const startDate = ranges[range];
+    const limit = ranges[range];
     return items.filter(item => 
-      (item.status === "done") && (new Date(item.leave_date) >= startDate)
+      (item.status === "available") && (new Date(item.leave_date) >= limit)
     );
   };
 
-  const doneItems = filterDoneItemsByDateRange(equipment, historyDateRange);
+  const availableItems = filterAvailableItemsByDateRange(equipment, historyDateRange);
   
   const handleDownloadReportTasks = () => {
     const doc = new jsPDF();
@@ -208,7 +208,7 @@ const Report = () => {
                 </thead>
                 <tbody>
                   {filteredItems.map(item => (
-                    <tr key={item.item_id}>
+                    <tr key={item.id}>
                       <td>{item.item_id}</td>
                       <td>{item.item_name}</td>
                       <td>{item.item_description}</td>
@@ -236,7 +236,7 @@ const Report = () => {
               {showHistory ? "Hide" : "Show More"}
             </button>
           </div>
-          <p>View items with 'done' status by date range:</p>
+          <p>View items with 'available' status by date range:</p>
           <div className="input-group">
             <select 
               value={historyDateRange} 
@@ -251,7 +251,7 @@ const Report = () => {
               Download Report
             </button>
           </div>
-          <p className="summary-count">Items with 'done' status: {doneItems.length}</p>
+          <p className="summary-count">Items with 'available' status: {availableItems.length}</p>
           {showHistory && (
             <div className="scrollable-content">
               <table className="table">
@@ -265,8 +265,8 @@ const Report = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {doneItems.map(item => (
-                    <tr key={item.item_id}>
+                  {availableItems.map(item => (
+                    <tr key={item.id}>
                       <td>{item.item_id}</td>
                       <td>{item.item_name}</td>
                       <td>{item.item_description}</td>

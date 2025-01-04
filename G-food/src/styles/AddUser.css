@@ -20,7 +20,7 @@
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 1rem;
-    color: #0033d9; /* A bold text color for contrast */
+    color: #0033d9; 
   }
   
   /* Form Inputs */
@@ -76,7 +76,7 @@
   
   /* Add Subtle Animations */
   .form-wrapper:hover {
-    background: linear-gradient(135deg, #eef2fc, #ffffff); /* Even lighter on hover */
+    background: linear-gradient(135deg, #eef2fc, #ffffff); 
     transition: background 0.3s ease-in-out;
   }
   

@@ -10,13 +10,12 @@ const Requests = () => {
   const [filteredRequests, setFilteredRequests] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isEquipmentManager, setIsEquipmentManager] = useState(-1);
+  const [isdepartmentManager, setIsDepartmentManager] = useState(-1);
+  const [role, setRole ] = useState('');
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user && user.item_category_managment !== -1) {
-      setIsEquipmentManager(user.category_name);
-    }
     fetchRequests();
   }, []);
 
@@ -27,7 +26,7 @@ const Requests = () => {
   const fetchRequests = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/auth/requests_by_category/${isEquipmentManager}`
+        `http://localhost:3000/auth/requests_by_role/${user.role}`
       );
       if (response.data.Status) {
         setRequests(response.data.Result);

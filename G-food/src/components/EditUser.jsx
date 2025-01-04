@@ -75,12 +75,11 @@ const EditUser = () => {
     axios
       .put("http://localhost:3000/auth/update_user/" + id, formData)
       .then((res) => {        
-        if (res.data.Status) navigate("/admin/user");
+        if (res.data.Status) navigate(`/admin/user_details/${id}`);
         else alert(res.data.Error + " on submit form");
       })
       .catch((err) => console.log(err));
 
-      navigate(`/admin/user_details/${id}`)
   };
 
   const handleTurnActive = () => {

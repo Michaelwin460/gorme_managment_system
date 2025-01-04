@@ -114,6 +114,17 @@ const AdminManageRequest = () => {
           Add a note, approve, or reject the request below.
         </p>
       </div>
+
+      {/* User Info Header */}
+      <div className="user-info-req">
+        <h5>Name: Yael Mashan</h5>
+        <h5>Department: Human Resources</h5>
+        <h5>ID: 1654356</h5>
+        {/* <h5>Name: {request.user_name}</h5>
+        <h5>Department: {request.user_department_name}</h5>
+        <h5>ID: {request.user_id}</h5> */}
+      </div>
+
       <div className="request_admin-form w-75 p-4 rounded">
         {[
           { label: "Request Header", key: "header" },
@@ -141,14 +152,14 @@ const AdminManageRequest = () => {
       </div>
       <div className="request_admin-navbar mt-4 navbar-custom">
         <button
-          className="btn request_admin-navbar-button-primary"
+          className="navbar-button btn-req button-primary"
           onClick={() => sentFeedbackToUser}
         >
           Send Feedback
         </button>
         <button
-          className={`btn ${
-            isEditing ? "request_admin-navbar-button-save" : "request_admin-navbar-button-edit"
+          className={`${
+            isEditing ? "button-save" : "button-edit"
             } navbar-button ${isEditing ? "selected" : ""}`
         }
           onClick={() => (isEditing ? handleSaveNote() : setIsEditing(true))}
@@ -156,19 +167,19 @@ const AdminManageRequest = () => {
           {isEditing ? "Save Note" : "Edit Note"}
         </button>
         <button
-          className="btn request_admin-navbar-button-stock"
+          className="navbar-button button-stock"
           onClick={() => navigate('../equipment')}
         >
           Check in Stock
         </button>
         <button
-          className="btn request_admin-navbar-button-success"
+          className="navbar-button button-success"
           onClick={handleApprove}
         >
           Approve
         </button>
         <button
-          className="btn request_admin-navbar-button-danger"
+          className="navbar-button button-danger"
           onClick={handleReject}
         >
           Reject

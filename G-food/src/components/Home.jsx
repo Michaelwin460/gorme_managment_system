@@ -1,19 +1,19 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from './AuthContext';
-import axios from 'axios';
-import '../styles/Home.css'; // Import the CSS file
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'; 
-
+import { AuthContext } from "./AuthContext";
+import axios from "axios";
+import "../styles/Home.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 const Home = () => {
-  const { user } = useContext(AuthContext); 
-  const [taskTotal, setTaskTotal] = useState(0);
+  const { user } = useContext(AuthContext);
+  const [requestsTotal, setRequestsTotal] = useState(0);
   const [leavingUsersTotal, setLeavingUsersTotal] = useState(0);
+  const [stockTotal, setStockTotal] = useState(0);
   const [leavingItemsRecord, setLeavingItemsRecord] = useState([]);
   const [isEquipmentManager, setIsEquipmentManager] = useState(-1);
-  const [searchQuery, setSearchQuery] = useState(''); // New state for search
+  const [searchQuery, setSearchQuery] = useState(""); // New state for search
 
   // useEffect(() => {
   //   // Initialize Bootstrap Popovers
@@ -22,16 +22,20 @@ const Home = () => {
   // }, []);
 
   useEffect(() => {
-    taskCount();
-    handleLeavingUsersCount();
-    handleLeavingItemsRecords();
-  }, []);
+    if (user){
+      requestCount();
+      handleLeavingUsersCount();
+      handleLeavingItemsRecords();
+    } 
+  }, [user]);
 
-  const taskCount = () => {
+  const requestCount = () => {
+    // console.log(user.role);
+    
     axios
-      .get("http://localhost:3000/auth/count_tasks_count")
+      .post("http://localhost:3000/auth/count_requests", {role: user.role})
       .then((res) => {
-        if (res.data.Status) setTaskTotal(res.data.Tasks);
+        if (res.data.Status) setRequestsTotal(res.data.Requests);
         else alert(res.data.Error);
       })
       .catch((err) => console.log(err));
@@ -50,12 +54,23 @@ const Home = () => {
   const handleLeavingItemsRecords = () => {
     if (user && user.item_category_managment !== -1) {
       setIsEquipmentManager(user.item_category_managment);
+      // console.log(isEquipmentManager);
+      
+      
     }
+    // console.log(user);
     axios
-      .get(`http://localhost:3000/auth/equipment_by_category/${isEquipmentManager}`)
+      .get(
+        `http://localhost:3000/auth/equipment_by_category/${user.item_category_managment}`
+      )
       .then((res) => {
         if (res.data.Status) {
           setLeavingItemsRecord(res.data.Result);
+          // console.log(user.item_category_managment);
+          
+          if (user.item_category_managment != -1 || (user && user.role === 'admin')) 
+            setStockTotal(res.data.Result.length)
+
         } else {
           alert(res.data.Error);
         }
@@ -64,34 +79,33 @@ const Home = () => {
   };
 
   const filteredItems = leavingItemsRecord
-    .filter(item => item.status == "leaving")
-    .filter(item => 
-      item.item_name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      item.id.toString().includes(searchQuery)
+    .filter((item) => item.status == "leaving")
+    .filter(
+      (item) =>
+        item.item_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.id.toString().includes(searchQuery)
     );
 
   return (
     <div className="home-container">
       <div className="p-3 d-flex justify-content-around mt-3">
-
-      <div className="summary-card " >
-          <h4 >Pending Requests:</h4>
-          <p className='text-center'>Review and Approve</p>
+        <div className="summary-card ">
+          <h4>Pending Requests:</h4>
+          <p className="text-center">Review and Approve</p>
           <hr />
           <div className="summary-total">
             <h5>Total:</h5>
-            <h5>{leavingUsersTotal}</h5>
+            <h5>{requestsTotal}</h5>
           </div>
         </div>
 
-
-        <div className="summary-card" >
-          <h4 >Manage Stock:</h4>
-          <p className='text-center'>Edit and Track Equipment</p>
+        <div className="summary-card">
+          <h4>Manage Stock:</h4>
+          <p className="text-center">Edit and Track Equipment</p>
           <hr />
           <div className="summary-total">
             <h5>In Stock:</h5>
-            <h5>1582</h5>
+            <h5>{stockTotal}</h5>
           </div>
           {/* <div>
             //question mark with popover explanation
@@ -104,12 +118,11 @@ const Home = () => {
               style={{ cursor: 'pointer', fontSize: '18px', color: '#007bff', marginLeft: '10px' }}
             ></i>
           </div> */}
-
         </div>
 
-        <div className="summary-card" >
+        <div className="summary-card">
           <h4>Offboarding Users</h4>
-          <p className='text-center'>Review & Approve</p>
+          <p className="text-center">Review & Approve</p>
           <hr />
           <div className="summary-total">
             <h5>Total:</h5>

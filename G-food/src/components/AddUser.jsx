@@ -20,6 +20,9 @@ const AddUser = () => {
     status: "active",
   });
 
+  
+  
+
   useEffect(() => {
     axios
       .get("http://localhost:3000/auth/department")
@@ -93,7 +96,7 @@ const AddUser = () => {
           <div className="col-12">
             <label className="form-label">Password</label>
             <input
-              type="password"
+              type="text"
               placeholder="Enter password"
               className="form-control"
               onChange={(e) => setUser({ ...user, password: e.target.value })}

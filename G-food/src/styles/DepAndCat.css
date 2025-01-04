@@ -1,53 +1,72 @@
 /* General Styling */
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #ffffff; /* Outer background */
+
+
+.dac-header{
+  border-bottom: 2px solid #ccc;
+}
+
+.dac-header h4 {
+  font-family: 'Montserrat';
+}
+
+
+/* body {
+    font-family: 'Montserrat';
+    background-color: #ffffff; 
     color: #333;
-  }
+  } */
   
   h4 {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Montserrat';
     font-size: 26px;
     font-weight: bold;
-    color: #5142F0; /* Updated header color */
+    color: #0033d9 
   }
   
   /* Navbar Section */
-  .navbar-custom {
-    background-color: #C900FE; /* Bright magenta */
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .navbar-custom .btn {
-    font-size: 16px;
-    color: white;
-    background-color: #C900FE; /* Same as Add button */
-    padding: 10px 20px;
+  .dac-navbar-custom {
+    display: flex;
+    background-color: white;
+    border: 2px solid #0033d9;
+    margin-bottom: 15px;
     border-radius: 5px;
-    font-weight: bold;
-    border: none;
-    transition: all 0.3s ease;
+    color: blue;
   }
   
-  .navbar-custom .btn:hover {
-    background-color: #FF80FF; /* Lighter pink */
+  .dac-navbar-section {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    border-right: 1px solid #0033d9;
+    font-weight: bold;
+    font-size: larger;
+    font-family: 'Montserrat';
   }
+  
+  /* .dac-navbar-section:last-child {
+    border-right: none;
+  } */
+  
+  .dac-navbar-section.selected {
+    background-color: #0033d9;
+    color: white;
+  }
+
   
   /* Table Styling */
   .table-custom {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    background-color: #F9F9FF; /* Gentle background */
+    background-color: #F9F9FF; 
     border-radius: 8px;
     overflow: hidden;
   }
 
-  table.table-custom th {
+  /* table.table-custom th {
     color: white !important;
-  }
+  } */
   
   .table-custom th, .table-custom td {
     padding: 12px;
@@ -55,19 +74,20 @@ body {
   }
   
   .table-custom th {
-    background-color: #5142F0; /* Soft purple */
-    color: white; /* White text for contrast */
+    background-color: #ddd; 
+    color: #0033d9; 
     font-weight: bold;
+    
     text-align: center;
   }
   
   .table-custom td {
-    background-color: #ffffff; /* White background for rows */
+    background-color: #ffffff; 
     color: #333;
   }
   
   .table-custom tbody tr:hover {
-    background-color: #f1f1f1; /* Slight hover effect */
+    background-color: #f1f1f1;
   }
   
   /* Input Fields (for editing) */
@@ -82,10 +102,14 @@ body {
     box-shadow: 0 0 8px rgba(81, 66, 240, 0.7);
     outline: none;
   }
+
+  .btn{
+    background-color: #fdcc4d; 
+  }
   
   /* Action Buttons (Save, Cancel, Edit) */
   .btn-success {
-    background-color: #C900FE; /* Bright magenta */
+    /* background-color: #C900FE;  */
     border: none;
     color: white;
     transition: all 0.3s ease;
@@ -97,14 +121,14 @@ body {
   
 
   .btn-secondary {
-    background-color: #b3b3b3; /* Stronger gray for better contrast */
-    border: 1px solid #999; /* Darker border for emphasis */
-    color: white; /* Ensures the text remains readable */
+    background-color: #b3b3b3; 
+    border: 1px solid #999;
+    color: white;
     transition: background-color 0.3s ease;
 }
 
 .btn-secondary:hover {
-    background-color: #999; /* Darker gray on hover */
+    background-color: #999;
 }
 
 
@@ -118,7 +142,7 @@ body {
   } */
   
   .btn-warning {
-    background-color: #F600FE;
+    /* background-color: #F600FE; */
     color: white;
     border: none;
   }
@@ -129,7 +153,7 @@ body {
   
   /* Add Button */
   .add-btn {
-    background-color: #C900FE; /* Bright magenta */
+    background-color: #d9b800; 
     color: white;
     padding: 10px 20px;
     border-radius: 5px;

@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
-import '../styles/Styles.css'
+import '../styles/Login.css'
 
 const Login = () => {
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ const Login = () => {
           };
           login(userData); 
           const role = result.data.role;
-          if (role === "admin" || role === "itemCategoryAdmin") {
+          if (role === "admin" || role === "itemCategoryAdmin" || role === "departmentAdmin") {
             navigate('/admin');
           } else if (role === "employee") {
             navigate(`/employee/${result.data.id}`);

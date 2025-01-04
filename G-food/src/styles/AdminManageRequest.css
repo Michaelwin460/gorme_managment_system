@@ -1,77 +1,146 @@
-/* General Styles */
+
+    /* General Container */
 .request_admin-container {
-    max-width: 900px;
-    margin: 0 auto;
-    font-family: "Roboto", sans-serif;
-  }
-  
-  .request_admin-header {
-    margin-bottom: 20px;
-  }
-  
+  background-color: #f5f8fc; /* Gentle background matching the theme */
+  border-radius: 16px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+  padding: 2.5rem;
+  max-width: 900px;
+  margin: auto;
+  font-family: 'Montserrat';
+}
+
+  /* Header Section */
+.request_admin-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
   .request_admin-title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #0033d9; /* System theme color */
+    font-size: 28px;
+    font-weight: 700;
+  font-family: 'Montserrat';
+
+    color: #0033D9;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
   }
-  
+
+
   .request_admin-description {
-    font-size: 1rem;
-    color: #555;
+    font-size: 16px;
+    color: #495057;
+    margin-top: 10px;
+  font-family: 'Montserrat';
+
   }
+
+  /* User Info Section */
+  .user-info-req{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Montserrat';
+    margin: 40px;
+  }
+
+
+
+  /* .user-info-req h5 {
+    font-family: 'Montserrat';
+    margin: 10px;
+  } */
+
+  .user-info-req h5 {
+    font-size: 18px;
+    font-weight: 500 bold;
+    color: #343a40;
+    font-family: 'Montserrat';
+    margin:20px;
+  }
+
+
   
-  .request_admin-form {
-    background-color: #f7f7f7;
-    border: 1px solid #d1d1d1;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  }
+/* Form Section */
+.request_admin-form {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
   
   .request_admin-field {
     margin-bottom: 20px;
   }
-  
+
+
   .request_admin-label {
     display: block;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #333;
-    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #0033D9;
+    margin-bottom: 0.5rem;
+    font-family: 'Montserrat';
   }
   
-  .request_admin-textbox {
-    width: 100%;
-    height: 42px;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: none;
-    box-sizing: border-box;
+  
+  
+.request_admin-textbox {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 16px;
+  font-family: 'Montserrat';
+  color: #495057;
+  transition: border-color 0.3s ease-in-out;
+}
+
+
+  /* .request_admin-textbox-note {
+    height: 60px;
+    width: calc(100% - 20px); 
+  } */
+
+  .request_admin-textbox:focus {
+    border-color: #0033D9;
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(0, 51, 217, 0.3);
   }
   
   .request_admin-textbox-note {
-    height: 60px;
-    width: calc(100% - 20px); /* Wider note box */
+    min-height: 120px;
   }
   
   /* Navbar */
-  .request_admin-navbar {
+  /* .request_admin-navbar {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     padding: 15px;
-    background-color: #0033d9; /* Solid system blue */
-    border-radius: 8px;
+    background-color: #0033d9;     border-radius: 8px;
     margin-top: 30px;
     width: 100%;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    gap: 10px; /* Even spacing between buttons */
-  }
+    gap: 10px; 
+  } */
+
+  /* Navbar Section */
+.request_admin-navbar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: white; 
+  border-radius: 12px;
+  padding: 10px 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  width: 75%;
+}
   
   /* Navbar Buttons */
-  .request_admin-navbar .btn {
+  /* .request_admin-navbar .btn {
     flex: 1;
     max-width: 160px;
     margin: 0 5px;
@@ -83,25 +152,29 @@
     color: white;
     text-align: center;
     transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
-  }
+  } */
   
-  .navbar-custom {
+  /* .navbar-custom {
     display: flex;
     background-color: white;
     border: 2px solid #0033d9;
     margin-bottom: 15px;
     border-radius: 5px;
     color: blue;
-  }
+  } */
   
   .navbar-button {
-    flex: 1;
-    padding: 12px;
+    /* flex: 1; */
+    /* padding: 5px; */
     text-align: center;
     cursor: pointer;
     font-weight: bold;
     border: none;
-    background-color: white;
+    border-radius: 15px;
+    height: 50px;
+    /* width: 50px; */
+    background-color: #fdcc4d;
+    color: white;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
   
@@ -121,32 +194,22 @@
   }
   
   
-  .request_admin-navbar .btn:last-child {
-    margin-right: 0;
-  }
-  
-  .request_admin-navbar .btn:first-child {
-    margin-left: 0;
-  }
-  
   /* Consistent Margins */
   .request_admin-container, .request_admin-navbar {
     box-sizing: border-box;
   }
   
   /* Symmetry Fixes */
-  .request_admin-navbar .btn {
-    height: 45px;
+  /* .request_admin-navbar {
+    height: 55px;
     text-align: center;
-  }
+  } */
   
-  .request_admin-form {
+  /* .request_admin-form {
     width: calc(100% - 20px);
-  }
+  } */
   
-  .request_admin-navbar {
-    padding: 10px 15px;
-  }
+
   
   /* Box Adjustments */
   .request_admin-textbox {
@@ -157,4 +220,20 @@
     height: 60px;
     margin: 0;
   }
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

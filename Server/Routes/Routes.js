@@ -57,20 +57,20 @@ router.get("/requests_by_user/:id", (req, res) => {
   });
 });
 
-router.get("/requests_by_category/:isEquipmentManager", (req, res) => {
-  const category = parseInt(req.params.isEquipmentManager, 10)
-    ? parseInt(req.params.isEquipmentManager, 10) // Convert to number if admin in general (temporarly)
-    : req.params.isEquipmentManager; 
-  // console.log(category);
-
+router.get("/requests_by_role/:role", (req, res) => {
+  const role = req.params.role
+  // console.log(role);
+  
   let sql;
-  if (category === -1) {
+  if (role === 'admin') {
+    sql = "SELECT * FROM requests";
+  } else if (role === 'itemCategoryAdmin') {
     sql = "SELECT * FROM requests WHERE status = 'by_category_manager'";
-  } else {
-    sql = "SELECT * FROM requests WHERE request_category = ? AND status = 'by_category_manager'";
+  } else if (role === 'departmentAdmin') {
+    sql = "SELECT * FROM requests WHERE status = 'by_department_manager'";
   }
 
-  con.query(sql, category === -1 ? [] : [category], (err, result) => {
+  con.query(sql, (err, result) => {
     // Only pass parameter when needed
     if (err) return res.json({ Status: false, Error: "Query Error " + err });
     // console.log(result);
@@ -170,7 +170,6 @@ router.put("/update_request_note/:request_id", (req, res) => {
     return res.json({ Status: true });
   });
 });
-
 
 router.post("/add_department", (req, res) => {
   const sql =
@@ -337,7 +336,7 @@ router.get("/equipment_by_item/:id", (req, res) => {
   const id = req.params.id;
   // console.log(id);
 
-  const sql = "SELECT * FROM equipment WHERE item_id = (?)";
+  const sql = "SELECT * FROM equipment WHERE id = (?)";
   con.query(sql, [id], (err, result) => {
     if (err) return res.json({ Status: false, Error: "Query Error " + err });
     return res.json({ Status: true, Result: result });
@@ -453,7 +452,7 @@ router.delete("/delete_equipment_by_employee/:id", (req, res) => {
 router.delete("/delete_item/:id", (req, res) => {
   const id = req.params.id;
 
-  const sql = `delete from equipment WHERE item_id = (?)`;
+  const sql = `delete from equipment WHERE id = (?)`;
 
   con.query(sql, [id], (err, result) => {
     if (err) return res.json({ Status: false, Error: err });
@@ -525,7 +524,7 @@ router.put("/update_item/:id", (req, res) => {
       start_date = ?, 
       leave_date = ?, 
       status = ? 
-    WHERE item_id = ?`;
+    WHERE id = ?`;
 
   con.query(
     sql,
@@ -606,12 +605,22 @@ router.delete("/delete_user/:id", (req, res) => {
   });
 });
 
-router.get("/count_tasks_count", (req, res) => {
-  const sql =
-    "SELECT COUNT(id) as tasks FROM equipment WHERE status = 'leaving' ";
+router.post("/count_requests", (req, res) => {
+  const role = req.body.role
+  // console.log(role);
+  
+  let sql;
+  if (role === 'admin') {
+    sql = "SELECT COUNT(id) as requests FROM requests";
+  } else if (role === 'itemCategoryAdmin') {
+    sql = "SELECT COUNT(id) as requests FROM requests WHERE status = 'by_category_manager'";
+  } else if (role === 'departmentAdmin') {
+    sql = "SELECT COUNT(id) as requests FROM requests WHERE status = 'by_department_manager'";
+  }  
+  
   con.query(sql, (err, result) => {
     if (err) return res.json({ Status: false, Error: "Query Error" });
-    return res.json({ Status: true, Tasks: result[0].tasks });
+    return res.json({ Status: true, Requests: result[0].requests });
   });
 });
 

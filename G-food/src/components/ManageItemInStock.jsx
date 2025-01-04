@@ -71,7 +71,6 @@ const ManageItemInStock = () => {
       .catch((err) => console.error("Error fetching item details:", err));
   };
   
-
   const handleEdit = () => {
     setIsEditing(true);
   };

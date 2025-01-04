@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import scheduleEmails from "./utils/auto-mailer.js";
+import scheduledBackup from "./utils/backup.js"
 
 
 const app = express()
@@ -102,7 +103,7 @@ app.post("/login", async (req, res) => {
       }
     }
 
-        // If user is an itemCategoryAdmin, fetch the category
+        // If user is a department admin, fetch the department
         let department = -1;
         let depName = '';
         if (user.role === "departmentAdmin") {
@@ -201,6 +202,8 @@ app.post("/login", async (req, res) => {
 
 scheduleEmails();
 // sendManagerEmail('mwtr2559@gmail.com', 'Reminder: Users Equipment Return Check', emailContent);
+
+scheduledBackup();
 
 app.listen(3000, () => {
     console.log("Server is running")

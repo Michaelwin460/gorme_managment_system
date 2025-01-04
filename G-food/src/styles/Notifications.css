@@ -1,12 +1,15 @@
 .notif-container {
     padding-top: 20px;
     font-family: 'Montserrat';
+  }
 
+  .header h1{
+    color: #0033d9;
   }
 
   .notif-header {
     font-family: 'Montserrat';
-
+    color: #0033d9;
   }
   
   .content-wrapper {
