@@ -2,6 +2,7 @@ import express from "express";
 import cors from 'cors'
 import con from "./utils/db.js";
 import { routes } from "./Routes/Routes.js";
+import { ApiRouts } from "./Routes/ApiRouts.js";
 // import { employeeRouter } from "./Routes/EmployeeRoutes.js";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
@@ -20,6 +21,7 @@ app.use(cors({
 app.use(express.json())
 app.use(cookieParser())
 app.use('/auth', routes)
+app.use('/api_v1', ApiRouts)
 // app.use('/employee', employeeRouter)
 app.use(express.static('Public'))
 
